@@ -1,18 +1,20 @@
+import "./CompletedTasks.css";
+
 // Functional Component
 function CompletedTasks() {
   return (
-    <div>
+    <div className="completedTask_container">
       <h1>Completed Tasks</h1>
       <div>
-        <span> Taking breakfast</span>
+        <span className="taskItem"> Taking breakfast</span>
         <button>delete</button>
       </div>
       <div>
-        <span>Meet batch advisor</span>
+        <span className="taskItem">Meet batch advisor</span>
         <button>delete</button>
       </div>
       <div>
-        <span>Community service</span>
+        <span className="taskItem">Community service</span>
         <button>delete</button>
       </div>
     </div>

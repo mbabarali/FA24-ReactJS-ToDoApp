@@ -1,0 +1,29 @@
+/* Google Font via import */
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  /* font-size: 62.5%; */
+  font-family: "Anton", sans-serif;
+  /* width: 90%; */
+  width: 80vw;
+  height: 100%;
+  margin: 0 auto;
+}
+
+#root {
+  height: 100%;
+}
+
+/* For Task Item*/
+.taskItem {
+  font-family: "Pacifico", cursive;
+  margin: 0 10px 0 0;
+}
