@@ -95,6 +95,28 @@ function App() {
     }
   }
 
+  function handleRestore(id) {
+    const taskInd = taskList.findIndex((task) => task.id === id);
+    console.log("taskList: ", taskList);
+
+    // ************** A HIGHLY RECOMMENDED APPROACH **************
+    // ************ Update State Variable(s) immutably ***********
+    // --- Three-step procedure to update the state, immutably ---
+
+    const updatedList = [...taskList]; // [STEP-1] Create copy // Shallow copy
+
+    updatedList[taskInd].trash = false; // [STEP-2] Update desired value(s) in copy
+    console.log("updatedList: ", updatedList);
+
+    setTaskList(updatedList); // [STEP-3] Update state with copy
+    console.log("taskInd: ", taskInd);
+
+    console.log(
+      "Task " + id + " at " + taskInd + " --> trash: ",
+      taskList[taskInd].trash
+    );
+  }
+
   // Returning JSX code which is multiline or/and contains nested elements
   return (
     <div className="App">
@@ -104,6 +126,7 @@ function App() {
         taskList={taskList}
         onDone={handleDone}
         onDelete={handleDelete}
+        onRestore={handleRestore}
       ></ManageTasks>
     </div>
   );

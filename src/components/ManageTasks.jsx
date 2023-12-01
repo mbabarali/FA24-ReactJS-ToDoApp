@@ -1,10 +1,11 @@
 import PendingTasks from "./PendingTasks";
 import CompletedTasks from "./CompletedTasks";
 // import ShowMessage from "./ShowMessage";
+import PurgedTasks from "./PurgedTasks";
 
 // Stateless Functional Component
 function ManageTasks(props) {
-  const { taskList, onDone, onDelete } = props;
+  const { taskList, onDone, onDelete, onRestore } = props;
 
   const pendingTasks = taskList.filter(function (task) {
     return task.done === false && task.trash === false;
@@ -14,7 +15,7 @@ function ManageTasks(props) {
     (task) => task.done === true && task.trash === false
   );
 
-  // const deletedTasks = taskList.filter((task) => task.trash === true);
+  const deletedTasks = taskList.filter((task) => task.trash === true);
 
   // console.log("pendingTasks ---> ", pendingTasks);
   // console.log("completedTasks ---> ", completedTasks);
@@ -42,6 +43,15 @@ function ManageTasks(props) {
         // React component identifiers are passed in expression i.e. in {}
         // HeadingContainer={ShowMessage} // Require import
       ></CompletedTasks>
+      <PurgedTasks
+        tasks={deletedTasks}
+        onRestore={onRestore}
+        // Built-in JSX element identifiers are passed as string
+        HeadingContainer="h2"
+
+        // React component identifiers are passed in expression i.e. in {}
+        // HeadingContainer={ShowMessage} // Require import
+      ></PurgedTasks>
     </div>
   );
 }
