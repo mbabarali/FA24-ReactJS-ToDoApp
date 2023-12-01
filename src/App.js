@@ -12,108 +12,133 @@ function App() {
   const [taskList, setTaskList] = useState(INITIAL_TASKS);
 
   function handleDone(id) {
-    const taskInd = taskList.findIndex((task) => task.id === id);
-    console.log("taskList: ", taskList);
-
     // ************** A HIGHLY RECOMMENDED APPROACH **************
     // ************ Update State Variable(s) immutably ***********
     // --- Three-step procedure to update the state, immutably ---
+    setTaskList((currentListState) => {
+      console.log("currentListState: ", currentListState);
+      const taskInd = currentListState.findIndex((task) => task.id === id);
 
-    const updatedList = [...taskList]; // [STEP-1] Create copy // Shallow copy
+      const updatedList = [...currentListState]; // [STEP-1] Create copy // Shallow copy
+      updatedList[taskInd].done = true; // [STEP-2] Update desired value(s) in copy
 
-    updatedList[taskInd].done = true; // [STEP-2] Update desired value(s) in copy
-    console.log("updatedList: ", updatedList);
+      console.log("updatedList: ", updatedList);
+      console.log("taskInd: ", taskInd);
+      console.log(
+        "In Callback [Done-Executed] ==> Task " +
+          id +
+          " at " +
+          taskInd +
+          " --> done: ",
+        currentListState[taskInd].done
+      );
 
-    setTaskList(updatedList); // [STEP-3] Update state with copy
-    console.log("taskInd: ", taskInd);
+      return updatedList; // Do not forget to return updated copy
+    }); // [STEP-3] Update state with copy
 
-    console.log(
-      "Task " + id + " at " + taskInd + " --> done: ",
-      taskList[taskInd].done
-    );
+    console.log("In Handler [Done-Scheduled] ==> Task " + id + " --> done ");
   }
 
   function handleDelete(id) {
-    const taskInd = taskList.findIndex((task) => task.id === id);
-    console.log("taskList: ", taskList);
+    // ************** A HIGHLY RECOMMENDED APPROACH **************
+    // ************ Update State Variable(s) immutably ***********
+    // --- Three-step procedure to update the state, immutably ---
+    setTaskList((currentListState) => {
+      console.log("currentListState: ", currentListState);
+
+      const taskInd = currentListState.findIndex((task) => task.id === id);
+      const updatedList = [...currentListState]; // [STEP-1] Create copy // Shallow copy
+      updatedList[taskInd].trash = true; // [STEP-2] Update desired value(s) in copy
+
+      console.log("updatedList: ", updatedList);
+      console.log("taskInd: ", taskInd);
+      console.log(
+        "In Callback [Trash-Executed] ==> Task " +
+          id +
+          " at " +
+          taskInd +
+          " --> trash: ",
+        currentListState[taskInd].trash
+      );
+
+      return updatedList; // Do not forget to return updated copy
+    }); // [STEP-3] Update state with copy
+
+    console.log("In Handler [Trash-Scheduled] ==> Task " + id + " --> trash ");
+  }
+
+  function handleAdd(newTitle) {
+    console.log("Add triggered!");
 
     // ************** A HIGHLY RECOMMENDED APPROACH **************
     // ************ Update State Variable(s) immutably ***********
     // --- Three-step procedure to update the state, immutably ---
-
-    const updatedList = [...taskList]; // [STEP-1] Create copy // Shallow copy
-
-    updatedList[taskInd].trash = true; // [STEP-2] Update desired value(s) in copy
-    console.log("updatedList: ", updatedList);
-
-    setTaskList(updatedList); // [STEP-3] Update state with copy
-    console.log("taskInd: ", taskInd);
-
-    console.log(
-      "Task " + id + " at " + taskInd + " --> trash: ",
-      taskList[taskInd].trash
-    );
-  }
-
-  function handleAdd(newTitle) {
-    console.log("Title changed");
-
     if (newTitle) {
-      // ************** A HIGHLY RECOMMENDED APPROACH **************
-      // ************ Update State Variable(s) immutably ***********
-      // --- Three-step procedure to update the state, immutably ---
+      setTaskList((currentListState) => {
+        console.log("currentListState: ", currentListState);
 
-      // [STEP-1] Create copy // Shallow copy
-      const newList = [...taskList];
+        // [STEP-1] Create copy // Shallow copy
+        const newList = [...currentListState];
 
-      // [STEP-2] Update desired value(s) in copy
-      newList.push({
-        id: 0,
-        title: "",
-        createDate: "00.00.0000",
-        done: false,
-        trash: false,
-      });
-      newList[newList.length - 1].id = 100 + newList.length;
-      newList[newList.length - 1].title = newTitle;
-      newList[newList.length - 1].createDate = new Date().toLocaleDateString(
-        "de-DE"
-      );
-      newList[newList.length - 1].done = false;
-      newList[newList.length - 1].trash = false;
-      console.log("newList: ", newList);
+        // [STEP-2] Update desired value(s) in copy
+        newList.push({
+          id: 0,
+          title: "",
+          createDate: "00.00.0000",
+          done: false,
+          trash: false,
+        });
+        newList[newList.length - 1].id = 100 + newList.length;
+        newList[newList.length - 1].title = newTitle;
+        newList[newList.length - 1].createDate = new Date().toLocaleDateString(
+          "de-DE"
+        );
+        newList[newList.length - 1].done = false;
+        newList[newList.length - 1].trash = false;
 
-      // [STEP-3] Update state with copy
-      setTaskList(newList);
-      console.log(
-        "Task " +
-          newList[newList.length - 1].id +
-          " at " +
-          (newList.length - 1) +
-          " --> Added "
-      );
+        console.log("newList: ", newList);
+        console.log(
+          "In Callback [Add-Executed] ==> Task " +
+            newList[newList.length - 1].id +
+            " at " +
+            (newList.length - 1) +
+            " --> Added "
+        );
+
+        return newList; // Do not forget to return updated copy
+      }); // [STEP-3] Update state with copy
+
+      console.log("In Handler [Add-Scheduled] ==> Task --> Added ");
     }
   }
 
   function handleRestore(id) {
-    const taskInd = taskList.findIndex((task) => task.id === id);
-    console.log("taskList: ", taskList);
-
     // ************** A HIGHLY RECOMMENDED APPROACH **************
     // ************ Update State Variable(s) immutably ***********
     // --- Three-step procedure to update the state, immutably ---
+    setTaskList((currentListState) => {
+      console.log("currentListState: ", currentListState);
+      const taskInd = currentListState.findIndex((task) => task.id === id);
 
-    const updatedList = [...taskList]; // [STEP-1] Create copy // Shallow copy
+      const updatedList = [...currentListState]; // [STEP-1] Create copy // Shallow copy
+      updatedList[taskInd].trash = false; // [STEP-2] Update desired value(s) in copy
 
-    updatedList[taskInd].trash = false; // [STEP-2] Update desired value(s) in copy
-    console.log("updatedList: ", updatedList);
+      console.log("updatedList: ", updatedList);
+      console.log("taskInd: ", taskInd);
+      console.log(
+        "In Callback [Restore-Executed] ==> Task " +
+          id +
+          " at " +
+          taskInd +
+          " --> trash: ",
+        currentListState[taskInd].trash
+      );
 
-    setTaskList(updatedList); // [STEP-3] Update state with copy
-    console.log("taskInd: ", taskInd);
+      return updatedList; // Do not forget to return updated copy
+    }); // [STEP-3] Update state with copy
 
     console.log(
-      "Task " + id + " at " + taskInd + " --> trash: ",
-      taskList[taskInd].trash
+      "In Handler [Restore-Scheduled] ==> Task " + id + " --> trash "
     );
   }
 
