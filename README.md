@@ -9,7 +9,7 @@ In the project directory, you can run:
 ### `npm install`
 
 You need to execute this command only once in order to download necessary packages in node_modules folder.\
-It downloads all necessary packages mentioned in the package.json file placed in the project directory.\
+It downloads all necessary packages mentioned in the package.json file placed in the project directory.
 
 ### `npm start`
 

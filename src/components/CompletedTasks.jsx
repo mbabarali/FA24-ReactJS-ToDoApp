@@ -1,3 +1,5 @@
+import TaskCompleted from "./TaskCompleted";
+
 import "./CompletedTasks.css";
 
 // Functional Component
@@ -5,7 +7,12 @@ function CompletedTasks() {
   return (
     <div className="completedTask_container">
       <h1>Completed Tasks</h1>
-      <div>
+      {/* Each component is a separate instance created by React */}
+      <TaskCompleted />
+      <TaskCompleted />
+      <TaskCompleted />
+
+      {/* <div>
         <span className="taskItem"> Taking breakfast</span>
         <button>delete</button>
       </div>
@@ -16,7 +23,7 @@ function CompletedTasks() {
       <div>
         <span className="taskItem">Community service</span>
         <button>delete</button>
-      </div>
+      </div> */}
     </div>
   );
 }
