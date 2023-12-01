@@ -1,6 +1,5 @@
 import "./AddTask.css";
 import ShowMessage from "./ShowMessage";
-
 import { useState } from "react"; //React Hook
 
 function AddTask(props) {
@@ -64,7 +63,25 @@ function AddTask(props) {
   } else {
     message = (
       <ShowMessage>
-        <small>Please add new task ...</small>
+        {/* Two-Way Binding of 'taskTitle' */}
+        {taskTitle ? (
+          <div>
+            <span className="taskItem">
+              {new Date().toLocaleDateString("de-DE")}
+            </span>
+            <span className="taskItem">{taskTitle}</span>
+          </div>
+        ) : (
+          <small>Please add new task ...</small>
+        )}
+
+        {/* <small>{taskTitle ?? "Please add new task ..."}</small> */}
+        {/* <small>{taskTitle ? taskTitle : "Please add new task ..."}</small> */}
+
+        {/* {taskTitle ?? <small>Please add new task ...</small>} */}
+        {/* {taskTitle ? taskTitle : <small>Please add new task ...</small>} */}
+
+        {/* <small>Please add new task ...</small> */}
       </ShowMessage>
     );
   }
