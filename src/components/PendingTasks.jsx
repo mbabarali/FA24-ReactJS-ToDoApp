@@ -1,5 +1,6 @@
 import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
+// import ShowMessage from "./ShowMessage";
 
 // Functional Component
 function PendingTasks(props) {
@@ -30,9 +31,13 @@ function PendingTasks(props) {
   });
 
   console.log(list);
+
+  // Variable name which is used as placeholder of an element must start with capital letter to stay consistent with component naming convention in React (e.g. PascalCase notation), such as 'Heading'
+  const Heading = props.headingContainer;
+
   return (
     <div className="pendingTask_container">
-      <h2>Pending Tasks</h2>
+      <Heading>Pending Tasks</Heading>
       {list}
     </div>
   );

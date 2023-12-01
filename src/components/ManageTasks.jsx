@@ -1,5 +1,6 @@
 import PendingTasks from "./PendingTasks";
 import CompletedTasks from "./CompletedTasks";
+// import ShowMessage from "./ShowMessage";
 
 // Stateless Functional Component
 function ManageTasks(props) {
@@ -26,10 +27,20 @@ function ManageTasks(props) {
         tasks={pendingTasks}
         onDone={onDone}
         onDelete={onDelete}
+        // Built-in JSX element identifiers are passed as string
+        headingContainer="h2"
+
+        // React component identifiers are passed in expression i.e. in {}
+        // headingContainer={ShowMessage} // Require import
       ></PendingTasks>
       <CompletedTasks
         tasks={completedTasks}
         onDelete={onDelete}
+        // Built-in JSX element identifiers are passed as string
+        HeadingContainer="h2"
+
+        // React component identifiers are passed in expression i.e. in {}
+        // HeadingContainer={ShowMessage} // Require import
       ></CompletedTasks>
     </div>
   );

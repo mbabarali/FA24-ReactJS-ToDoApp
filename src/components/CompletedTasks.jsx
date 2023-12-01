@@ -1,9 +1,11 @@
 import TaskCompleted from "./TaskCompleted";
+// import ShowMessage from "./ShowMessage";
 
 import "./CompletedTasks.css";
 
 // Functional Component
-function CompletedTasks({ tasks, onDelete }) {
+// To enable destructurin in function arguments for a dynamic component placeholder, its name must start with capital letter to stay consistent with component naming convention in React (e.g. PascalCase notation), such as 'HeadingContainer'
+function CompletedTasks({ tasks, onDelete, HeadingContainer }) {
   const list = tasks.map((task, ind) => {
     return (
       <TaskCompleted
@@ -20,7 +22,7 @@ function CompletedTasks({ tasks, onDelete }) {
 
   return (
     <div className="completedTask_container">
-      <h2>Completed Tasks</h2>
+      <HeadingContainer>Completed Tasks</HeadingContainer>
       {list}
     </div>
   );
