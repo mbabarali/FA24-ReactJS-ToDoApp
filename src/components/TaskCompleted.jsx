@@ -1,9 +1,5 @@
-import { useState } from "react";
-
-// Stateful Functional Component
+// Stateless Functional Component
 function TaskCompleted(props) {
-  let [trash, setTrash] = useState(false);
-
   function doHandleDelete() {
     props.onDelete(props.id);
   }
@@ -12,10 +8,8 @@ function TaskCompleted(props) {
     <div>
       <span className="taskItem">{props.title}</span>
 
-      {/* UI unchanged onClick as no change in state variable --> "trash" */}
-      <button onClick={doHandleDelete} disabled={trash}>
-        delete
-      </button>
+      {/* UI unchanged onClick as no change in state variable here, or in any of its incestor */}
+      <button onClick={doHandleDelete}>delete</button>
     </div>
   );
 }

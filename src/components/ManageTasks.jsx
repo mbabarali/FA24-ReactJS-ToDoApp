@@ -1,5 +1,6 @@
 import PendingTasks from "./PendingTasks";
 import CompletedTasks from "./CompletedTasks";
+import { useState } from "react";
 
 const INITIAL_TASKS = [
   {
@@ -46,8 +47,11 @@ const INITIAL_TASKS = [
   },
 ];
 
-// Functional Component
+// Stateful Functional Component
 function ManageTasks() {
+  const [taskList, setTaskList] = useState(INITIAL_TASKS);
+  // Unchanged state "taskList" because no call is added yet for setter function "setTaskList"
+
   function handleDone(id) {
     console.log("Task " + id + " --> done");
   }
@@ -56,15 +60,15 @@ function ManageTasks() {
     console.log("Task " + id + " --> trash: ");
   }
 
-  const pendingTasks = INITIAL_TASKS.filter(function (task) {
+  const pendingTasks = taskList.filter(function (task) {
     return task.done === false && task.trash === false;
   });
 
-  const completedTasks = INITIAL_TASKS.filter(
+  const completedTasks = taskList.filter(
     (task) => task.done === true && task.trash === false
   );
 
-  // const deletedTasks = INITIAL_TASKS.filter((task) => task.trash === true);
+  // const deletedTasks = taskList.filter((task) => task.trash === true);
 
   // console.log("pendingTasks ---> ", pendingTasks);
   // console.log("completedTasks ---> ", completedTasks);

@@ -1,6 +1,7 @@
 import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
 
+// Functional Component
 function PendingTasks(props) {
   const list = props.tasks.map((task, ind) => {
     return (
