@@ -1,6 +1,8 @@
 import "./AddTask.css";
 import ShowMessage from "./ShowMessage";
+
 import { useState } from "react"; //React Hook
+import { useRef } from "react"; //React Hook
 
 function AddTask(props) {
   /*
@@ -22,36 +24,23 @@ function AddTask(props) {
   let setAdd = arr[1];
 
   let message = "";
-  const [taskTitle, setTaskTitle] = useState("");
+  const taskTitle = useRef();
 
-  function handleInputChange(event) {
-    setTaskTitle(event.target.value);
+  function handleInputChange() {
     setAdd(false);
-
-    console.log(
-      "Input changed: (Old value, New value) = ",
-      taskTitle,
-      event.target.value
-    );
   }
 
   function handleAdd() {
-    props.onAdd(taskTitle);
+    props.onAdd(taskTitle.current.value);
 
     /* Updating state variable obtained from the react hook */
     setAdd(true);
 
-    // -------------------------------------------------------
-    // Logic with two-way binding without direct access or the
-    // involvement of DOM element (manipulating the <input> element)
-    // -------------------------------------------------------
-
-    // --- CLEAR STATE using setTaskTitle("");
-    //     Must clear the input state, 'taskTitle' using
-    //     'setTaskTitle()', otherwise clicking "Add" button
-    //     will add the new task even if the input field is cleared
-    //     using inputField[0].value = ""
-    setTaskTitle(""); // Must Clear input state
+    // --- CLEAR Ref taskTitle.current.value;
+    //     Must clear input field using taskTitle.current.value = "";
+    //     so that input field shall get a fresh value from the
+    //     user on next task entry
+    taskTitle.current.value = "";
   }
 
   if (add) {
@@ -63,7 +52,12 @@ function AddTask(props) {
   } else {
     message = (
       <ShowMessage>
-        {/* Two-Way Binding of 'taskTitle' */}
+        {/* Two-Way Binding of 'taskTitle' not possible when it is a ref: 
+        -- 'taskTitle' is not a state hence any change in its value can not initiate re-rendering of the component
+        -- Although, two-way binding is not possibe with refs, the refs can replace unnecessary states (i.e. the states which do not update or control the UI) 
+        -- Refs can not be used in two-way binding because they do not control or update UI when their value change.
+         */}
+        {/*
         {taskTitle ? (
           <div>
             <span className="taskItem">
@@ -74,6 +68,7 @@ function AddTask(props) {
         ) : (
           <small>Please add new task ...</small>
         )}
+        */}
 
         {/* <small>{taskTitle ?? "Please add new task ..."}</small> */}
         {/* <small>{taskTitle ? taskTitle : "Please add new task ..."}</small> */}
@@ -81,7 +76,7 @@ function AddTask(props) {
         {/* {taskTitle ?? <small>Please add new task ...</small>} */}
         {/* {taskTitle ? taskTitle : <small>Please add new task ...</small>} */}
 
-        {/* <small>Please add new task ...</small> */}
+        <small>Please add new task ...</small>
       </ShowMessage>
     );
   }
@@ -90,13 +85,14 @@ function AddTask(props) {
     <div className="addTask_container">
       <h1>Add Task</h1>
       <label htmlFor="taskField">Add new task: </label>
-      {/* Controlled Input: When value is controlled by React state */}
+      {/* Uncontrolled Input: When value is NOT controlled by React state */}
       <input
+        ref={taskTitle}
         type="text"
         id="taskField"
         onChange={handleInputChange}
-        // Two-Way Binding of 'taskTitle'
-        value={taskTitle}
+        // Two-Way Binding of 'taskTitle' not pssible as 'taskTitle' is not state hence any change in its value can not initiate re-rendering of the component
+        // value={taskTitle}
       />
       <button onClick={handleAdd}>Add</button>
       {message}
