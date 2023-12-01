@@ -1,8 +1,11 @@
-// Functional Component
+import { useState } from "react";
+
+// Stateful Functional Component
 function TaskCompleted(props) {
-  let trash = false;
+  let [trash, setTrash] = useState(false);
+
   function handleDelete() {
-    trash = true;
+    setTrash(true);
     console.log("After button pressed --> trash = ", trash);
   }
 
@@ -10,7 +13,7 @@ function TaskCompleted(props) {
     <div>
       <span className="taskItem">{props.title}</span>
 
-      {/* Do not update UI with direct/normal variables */}
+      {/* Updating UI with state variable --> "trash" */}
       <button onClick={handleDelete} disabled={trash}>
         delete
       </button>

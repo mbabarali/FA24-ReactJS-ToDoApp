@@ -1,15 +1,20 @@
-// Functional Component
+import { useState } from "react";
+
+// Stateful Functional Component
 function TaskPending(props) {
-  let done = false;
-  let trash = false;
+  let [done, setDone] = useState(false);
+  let [trash, setTrash] = useState(false);
+
+  // Unconditional state change
+  // setDone(true); //[Infinite Loop of Re-rendering]
 
   function handleDone() {
-    done = true;
+    setDone(true);
     console.log("After done button pressed --> done = ", done);
   }
 
   function handleDelete() {
-    trash = true;
+    setTrash(true);
     console.log("After delete button pressed --> trash = ", trash);
   }
 
@@ -18,12 +23,12 @@ function TaskPending(props) {
       <span className="taskItem">{props.createDate}</span>
       <span className="taskItem">{props.title}</span>
 
-      {/* Do not update UI with direct/normal variables */}
+      {/* Updating UI with state variable --> "done" */}
       <button onClick={handleDone} disabled={done}>
         done
       </button>
 
-      {/* Do not update UI with direct/normal variables */}
+      {/* Updating UI with state variable --> "trash" */}
       <button onClick={handleDelete} disabled={trash}>
         delete
       </button>
