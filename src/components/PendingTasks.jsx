@@ -8,28 +8,9 @@ function PendingTasks() {
     <div className="pendingTask_container">
       <h2>Pending Tasks</h2>
       {/* Each component is a separate instance created by React */}
-      <TaskPending />
-      <TaskPending />
-      <TaskPending />
-
-      {/* <div>
-        <span className="taskItem">20.10.2023</span>
-        <span className="taskItem">Going to admission office</span>
-        <button>done</button>
-        <button>delete</button>
-      </div>
-      <div>
-        <span className="taskItem">20.10.2023</span>
-        <span className="taskItem">Going to admission office</span>
-        <button>done</button>
-        <button>delete</button>
-      </div>
-      <div>
-        <span className="taskItem">19.10.2023</span>
-        <span className="taskItem"> Attending seminar</span>
-        <button>done</button>
-        <button>delete</button>
-      </div> */}
+      <TaskPending title="Going to admission office" createDate="20.10.2023" />
+      <TaskPending title="Visit library" createDate="16.10.2023" />
+      <TaskPending title="Attending seminar" createDate="19.10.2023" />
     </div>
   );
 }

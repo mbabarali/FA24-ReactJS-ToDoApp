@@ -8,22 +8,9 @@ function CompletedTasks() {
     <div className="completedTask_container">
       <h2>Completed Tasks</h2>
       {/* Each component is a separate instance created by React */}
-      <TaskCompleted />
-      <TaskCompleted />
-      <TaskCompleted />
-
-      {/* <div>
-        <span className="taskItem"> Taking breakfast</span>
-        <button>delete</button>
-      </div>
-      <div>
-        <span className="taskItem">Meet batch advisor</span>
-        <button>delete</button>
-      </div>
-      <div>
-        <span className="taskItem">Community service</span>
-        <button>delete</button>
-      </div> */}
+      <TaskCompleted title="Taking breakfast" />
+      <TaskCompleted title="Meet batch advisor" />
+      <TaskCompleted title="Community service" />
     </div>
   );
 }

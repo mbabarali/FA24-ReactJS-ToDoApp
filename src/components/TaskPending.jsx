@@ -1,9 +1,9 @@
 // Functional Component
-function TaskPending() {
+function TaskPending(props) {
   return (
     <div>
-      <span className="taskItem">20.10.2023</span>
-      <span className="taskItem">Going to admission office</span>
+      <span className="taskItem">{props.createDate}</span>
+      <span className="taskItem">{props.title}</span>
       <button>done</button>
       <button>delete</button>
     </div>

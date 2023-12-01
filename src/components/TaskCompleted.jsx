@@ -1,8 +1,8 @@
 // Functional Component
-function TaskCompleted() {
+function TaskCompleted(props) {
   return (
     <div>
-      <span className="taskItem"> Taking breakfast</span>
+      <span className="taskItem">{props.title}</span>
       <button>delete</button>
     </div>
   );
