@@ -1,16 +1,32 @@
+import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
 
-import "./PendingTasks.css";
-
-// Functional Component
 function PendingTasks() {
   return (
     <div className="pendingTask_container">
       <h2>Pending Tasks</h2>
-      {/* Each component is a separate instance created by React */}
-      <TaskPending title="Going to admission office" createDate="20.10.2023" />
-      <TaskPending title="Visit library" createDate="16.10.2023" />
-      <TaskPending title="Attending seminar" createDate="19.10.2023" />
+      <TaskPending
+        title="Going to admission office"
+        // JSX Slot --> Passing JSX code via attribute props
+        // - For multiple JSX elements, use <div> or any other element as a wrapper
+        createDate={
+          <span>
+            <span>20</span>
+            <span>.10</span>
+            <span>.2023</span>
+          </span>
+        }
+      />
+      <TaskPending
+        title="Visit library"
+        // JSX Slot --> Passing JSX code via attribute props
+        createDate={<span>16.10.2023</span>}
+      />
+      <TaskPending
+        title="Attending seminar"
+        // JSX Slot --> Passing JSX code via attribute props
+        createDate={<span>19.10.2023</span>}
+      />
     </div>
   );
 }
