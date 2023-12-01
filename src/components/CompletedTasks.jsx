@@ -10,6 +10,7 @@ function CompletedTasks(props) {
         //Mandatory unique key for each item in the React list
         key={ind}
         title={task.title}
+        id={task.id}
       />
     );
 
