@@ -45,6 +45,58 @@ function AddTask({ onAdd }) {
     taskTitle.current.value = "";
   };
 
+  // ========= Conditional Rendering =========
+  // ------------- with if-else --------------
+  // if (add) {
+  //   message = (
+  //     <ShowMessage>
+  //       <i>Task Added Successfully!</i>
+  //     </ShowMessage>
+  //   );
+  // } else {
+  //   message = (
+  //     <ShowMessage>
+  //       <small>Please add new task ...</small>
+  //     </ShowMessage>
+  //   );
+  // }
+
+  // ========= Conditional Rendering =========
+  // ------ with ternary operator ?: ---------
+  // message = add ? (
+  //   <ShowMessage>
+  //     <i>Task Added Successfully!</i>
+  //   </ShowMessage>
+  // ) : (
+  //   <ShowMessage>
+  //     <small>Please add new task ...</small>
+  //   </ShowMessage>
+  // );
+
+  // ========= Conditional Rendering =========
+  // ---- with logical operators && or || ----
+  // message = (
+  //   <ShowMessage>
+  //     <small>Please add new task ...</small>
+  //   </ShowMessage>
+  // );
+  // let message1 = add && (
+  //   <ShowMessage>
+  //     <i>Task Added Successfully!</i>
+  //   </ShowMessage>
+  // );
+  // message = message1 || message;
+  // // --- Above expression is simplified below ---
+  // message = (add && (
+  //   <ShowMessage>
+  //     <i>Task Added Successfully!</i>
+  //   </ShowMessage>
+  // )) || (
+  //   <ShowMessage>
+  //     <small>Please add new task ...</small>
+  //   </ShowMessage>
+  // );
+
   if (add) {
     message = (
       <ShowMessage>
