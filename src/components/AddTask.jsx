@@ -4,7 +4,7 @@ import ShowMessage from "./ShowMessage";
 import { useState } from "react"; //React Hook
 import { useRef } from "react"; //React Hook
 
-function AddTask(props) {
+function AddTask({ onAdd }) {
   /*
     React Hooks (Hook fucntions) 
     - MUST be called within react components.
@@ -33,7 +33,7 @@ function AddTask(props) {
 
   // Arrow Function (An anonymous function)
   const handleAdd = () => {
-    props.onAdd(taskTitle.current.value);
+    onAdd(taskTitle.current.value);
 
     /* Updating state variable obtained from the react hook */
     setAdd(true);

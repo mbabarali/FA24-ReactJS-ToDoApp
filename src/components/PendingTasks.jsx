@@ -3,7 +3,9 @@ import TaskPending from "./TaskPending";
 
 // Functional Component
 function PendingTasks(props) {
-  const list = props.tasks.map((task, ind) => {
+  const { tasks, onDone, onDelete } = props;
+
+  const list = tasks.map((task, ind) => {
     return (
       <TaskPending
         //Mandatory unique key for each item in the React list
@@ -12,8 +14,8 @@ function PendingTasks(props) {
         // JSX Slot --> Passing JSX code via attribute props
         createDate={<span>{task.createDate}</span>}
         id={task.id}
-        onDone={props.onDone}
-        onDelete={props.onDelete}
+        onDone={onDone}
+        onDelete={onDelete}
       />
     );
 

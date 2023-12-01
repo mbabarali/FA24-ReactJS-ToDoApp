@@ -1,8 +1,8 @@
 // Functional Component
-function ShowMessage(props) {
-  console.log(props.children);
+function ShowMessage({ children }) {
+  console.log(children);
 
-  return <div>{props.children}</div>;
+  return <div>{children}</div>;
 }
 
 export default ShowMessage;
