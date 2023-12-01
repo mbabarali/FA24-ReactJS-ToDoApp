@@ -5,19 +5,14 @@ function TaskCompleted(props) {
   let [trash, setTrash] = useState(false);
 
   function doHandleDelete() {
-    handleDelete(props.id);
-  }
-
-  function handleDelete(id) {
-    setTrash(true);
-    console.log("After button pressed at task " + id + " --> trash = ", trash);
+    props.onDelete(props.id);
   }
 
   return (
     <div>
       <span className="taskItem">{props.title}</span>
 
-      {/* Updating UI with state variable --> "trash" */}
+      {/* UI unchanged onClick as no change in state variable --> "trash" */}
       <button onClick={doHandleDelete} disabled={trash}>
         delete
       </button>

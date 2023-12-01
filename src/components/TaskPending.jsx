@@ -9,27 +9,11 @@ function TaskPending(props) {
   // setDone(true); //[Infinite Loop of Re-rendering]
 
   function doHandleDone() {
-    handleDone(props.id);
-  }
-
-  function handleDone(id) {
-    setDone(true);
-    console.log(
-      "After done button pressed at task " + id + " --> done = ",
-      done
-    );
+    props.onDone(props.id);
   }
 
   function doHandleDelete() {
-    handleDelete(props.id);
-  }
-
-  function handleDelete(id) {
-    setTrash(true);
-    console.log(
-      "After delete button pressed at task " + id + " --> trash = ",
-      trash
-    );
+    props.onDelete(props.id);
   }
 
   return (
@@ -37,12 +21,12 @@ function TaskPending(props) {
       <span className="taskItem">{props.createDate}</span>
       <span className="taskItem">{props.title}</span>
 
-      {/* Updating UI with state variable --> "done" */}
+      {/* UI unchanged onClick as no change in state variable --> "done" */}
       <button onClick={doHandleDone} disabled={done}>
         done
       </button>
 
-      {/* Updating UI with state variable --> "trash" */}
+      {/* UI unchanged onClick as no change in state variable --> "trash" */}
       <button onClick={doHandleDelete} disabled={trash}>
         delete
       </button>

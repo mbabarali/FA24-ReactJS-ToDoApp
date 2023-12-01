@@ -11,6 +11,7 @@ function CompletedTasks(props) {
         key={ind}
         title={task.title}
         id={task.id}
+        onDelete={props.onDelete}
       />
     );
 

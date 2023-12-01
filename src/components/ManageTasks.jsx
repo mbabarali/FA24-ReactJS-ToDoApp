@@ -48,6 +48,14 @@ const INITIAL_TASKS = [
 
 // Functional Component
 function ManageTasks() {
+  function handleDone(id) {
+    console.log("Task " + id + " --> done");
+  }
+
+  function handleDelete(id) {
+    console.log("Task " + id + " --> trash: ");
+  }
+
   const pendingTasks = INITIAL_TASKS.filter(function (task) {
     return task.done === false && task.trash === false;
   });
@@ -65,8 +73,15 @@ function ManageTasks() {
   return (
     <div>
       <h1>Manage Tasks</h1>
-      <PendingTasks tasks={pendingTasks}></PendingTasks>
-      <CompletedTasks tasks={completedTasks}></CompletedTasks>
+      <PendingTasks
+        tasks={pendingTasks}
+        onDone={handleDone}
+        onDelete={handleDelete}
+      ></PendingTasks>
+      <CompletedTasks
+        tasks={completedTasks}
+        onDelete={handleDelete}
+      ></CompletedTasks>
     </div>
   );
 }

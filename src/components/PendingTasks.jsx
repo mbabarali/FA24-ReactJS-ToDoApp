@@ -11,6 +11,8 @@ function PendingTasks(props) {
         // JSX Slot --> Passing JSX code via attribute props
         createDate={<span>{task.createDate}</span>}
         id={task.id}
+        onDone={props.onDone}
+        onDelete={props.onDelete}
       />
     );
 
