@@ -2,3 +2,7 @@
   padding: 5% 0;
   font-weight: 400;
 }
+
+.inProgress {
+  color: green;
+}

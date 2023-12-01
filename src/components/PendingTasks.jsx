@@ -1,10 +1,35 @@
 import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
-// import ShowMessage from "./ShowMessage";
+import { useState } from "react";
 
-// Functional Component
+// Stateful Functional Component
 function PendingTasks(props) {
   const { tasks, onDone, onDelete } = props;
+
+  const [InProgress, setInProgress] = useState([]);
+
+  function onInProgress(id) {
+    console.log("InProgress [Current] = ", InProgress);
+
+    const taskInd = InProgress.findIndex((taskId) => taskId === id);
+
+    // ************** A HIGHLY RECOMMENDED APPROACH **************
+    // ************ Update State Variable(s) immutably ***********
+    // --- Three-step procedure to update the state, immutably ---
+
+    const updatedState = [...InProgress]; // [STEP-1] Create copy // Shallow copy
+
+    // [STEP-2] Update desired value(s) in copy
+    if (taskInd >= 0) {
+      console.log("Removing " + id + " at " + taskInd);
+      updatedState.splice(taskInd, 1); // At index ('taskInd'), remove one ('1') array element i.e. 'id'
+    } else {
+      console.log("Adding " + id + " at " + updatedState.length);
+      updatedState.push(id); // At the end, add 'id'
+    }
+
+    setInProgress(updatedState); // [STEP-3] Update state with copy
+  }
 
   const list = tasks.map((task, ind) => {
     return (
@@ -17,6 +42,8 @@ function PendingTasks(props) {
         id={task.id}
         onDone={onDone}
         onDelete={onDelete}
+        onInProgress={onInProgress}
+        className={InProgress.includes(task.id) ? "inProgress" : ""}
       />
     );
 
