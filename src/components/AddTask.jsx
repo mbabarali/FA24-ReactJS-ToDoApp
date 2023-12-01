@@ -2,9 +2,6 @@ import ShowMessage from "./ShowMessage";
 
 import { useState } from "react"; //React Hook
 
-import "./AddTask.css";
-
-// Stateful Functional Component
 function AddTask(props) {
   /*
     React Hooks (Hook fucntions) 
@@ -25,27 +22,40 @@ function AddTask(props) {
   let setAdd = arr[1];
 
   let message = "";
-  let taskTitle = "";
+  const [taskTitle, setTaskTitle] = useState("");
 
   function handleInputChange(event) {
+    setTaskTitle(event.target.value);
     setAdd(false);
-    console.log("Input changed to ", event.target.value);
+
+    console.log(
+      "Input changed: (Old value, New value) = ",
+      taskTitle,
+      event.target.value
+    );
   }
 
   function handleAdd() {
-    // Directly accessing DOM for input element
-    const inputField = document.getElementsByTagName("input");
-    taskTitle = inputField[0].value;
     props.onAdd(taskTitle);
 
     /* Updating state variable obtained from the react hook */
     setAdd(true);
+
+    // Directly accessing DOM for input element -- Still need it to clear the input field
+    const inputField = document.getElementsByTagName("input");
 
     // --- CLEAR VIEW using inputField[0].value = "";
     //     Must clear input field using inputField[0].value = "";
     //     so that input field shall get a fresh value from the
     //     user on next task entry
     inputField[0].value = ""; // Clear input field
+
+    // --- CLEAR STATE using setTaskTitle("");
+    //     Must clear the input state, 'taskTitle' using
+    //     'setTaskTitle()', otherwise clicking "Add" button
+    //     will add the new task even if the input field is cleared
+    //     using inputField[0].value = ""
+    setTaskTitle(""); // Must Clear input state
   }
 
   if (add) {
