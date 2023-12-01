@@ -26,11 +26,13 @@ function AddTask(props) {
   let message = "";
   const taskTitle = useRef();
 
-  function handleInputChange() {
+  // Legacy Anonymous Function (An anonymous function)
+  const handleInputChange = function () {
     setAdd(false);
-  }
+  };
 
-  function handleAdd() {
+  // Arrow Function (An anonymous function)
+  const handleAdd = () => {
     props.onAdd(taskTitle.current.value);
 
     /* Updating state variable obtained from the react hook */
@@ -41,7 +43,7 @@ function AddTask(props) {
     //     so that input field shall get a fresh value from the
     //     user on next task entry
     taskTitle.current.value = "";
-  }
+  };
 
   if (add) {
     message = (
