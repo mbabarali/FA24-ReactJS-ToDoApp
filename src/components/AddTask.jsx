@@ -1,3 +1,4 @@
+import "./AddTask.css";
 import ShowMessage from "./ShowMessage";
 
 import { useState } from "react"; //React Hook
@@ -41,14 +42,10 @@ function AddTask(props) {
     /* Updating state variable obtained from the react hook */
     setAdd(true);
 
-    // Directly accessing DOM for input element -- Still need it to clear the input field
-    const inputField = document.getElementsByTagName("input");
-
-    // --- CLEAR VIEW using inputField[0].value = "";
-    //     Must clear input field using inputField[0].value = "";
-    //     so that input field shall get a fresh value from the
-    //     user on next task entry
-    inputField[0].value = ""; // Clear input field
+    // -------------------------------------------------------
+    // Logic with two-way binding without direct access or the
+    // involvement of DOM element (manipulating the <input> element)
+    // -------------------------------------------------------
 
     // --- CLEAR STATE using setTaskTitle("");
     //     Must clear the input state, 'taskTitle' using
@@ -76,7 +73,14 @@ function AddTask(props) {
     <div className="addTask_container">
       <h1>Add Task</h1>
       <label htmlFor="taskField">Add new task: </label>
-      <input type="text" id="taskField" onChange={handleInputChange} />
+      {/* Controlled Input: When value is controlled by React state */}
+      <input
+        type="text"
+        id="taskField"
+        onChange={handleInputChange}
+        // Two-Way Binding of 'taskTitle'
+        value={taskTitle}
+      />
       <button onClick={handleAdd}>Add</button>
       {message}
     </div>
