@@ -1,6 +1,8 @@
 // Functional Component
-function ShowMessage() {
-  return <div>Task Added Successfully! </div>;
+function ShowMessage(props) {
+  console.log(props.children);
+
+  return <div>{props.children}</div>;
 }
 
 export default ShowMessage;

@@ -10,7 +10,10 @@ function AddTask() {
       <label>Add new task: </label>
       <input type="text" />
       <button>Add</button>
-      <ShowMessage />
+      {/* <ShowMessage>Task Added Successfully!</ShowMessage> */}
+      <ShowMessage>
+        <i>Task Added Successfully!</i>
+      </ShowMessage>
     </div>
   );
 }
