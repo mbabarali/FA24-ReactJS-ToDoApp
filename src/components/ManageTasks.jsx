@@ -50,14 +50,43 @@ const INITIAL_TASKS = [
 // Stateful Functional Component
 function ManageTasks() {
   const [taskList, setTaskList] = useState(INITIAL_TASKS);
-  // Unchanged state "taskList" because no call is added yet for setter function "setTaskList"
 
   function handleDone(id) {
-    console.log("Task " + id + " --> done");
+    const taskInd = taskList.findIndex((task) => task.id === id);
+    console.log("taskList: ", taskList);
+
+    // ************** A HIGHLY RECOMMENDED APPROACH **************
+    // ************ Update State Variable(s) immutably ***********
+    // --- Three-step procedure to update the state, immutably ---
+
+    const updatedList = [...taskList]; // [STEP-1] Create copy // Shallow copy
+
+    updatedList[taskInd].done = true; // [STEP-2] Update desired value(s) in copy
+    console.log("updatedList: ", updatedList);
+
+    setTaskList(updatedList); // [STEP-3] Update state with copy
+    console.log("taskInd: ", taskInd);
+
+    console.log(
+      "Task " + id + " at " + taskInd + " --> done: ",
+      taskList[taskInd].done
+    );
   }
 
   function handleDelete(id) {
-    console.log("Task " + id + " --> trash: ");
+    const taskInd = taskList.findIndex((task) => task.id === id);
+
+    // !!! !!! REJECTED Approach !!! !!!
+    // !!! !!! REJECTED by React !!! !!!
+    // !!! !!! NO IMPACT on VDOM !!! !!!
+    // !!! !!! NO IMPACT on DOM  !!! !!!
+    // Mutating (i.e. changing) the state by accessing it directly
+    taskList[taskInd].trash = true; // Direct access
+
+    console.log(
+      "Task " + id + " at " + taskInd + " --> trash: ",
+      taskList[taskInd].trash
+    );
   }
 
   const pendingTasks = taskList.filter(function (task) {

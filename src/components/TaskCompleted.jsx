@@ -8,7 +8,7 @@ function TaskCompleted(props) {
     <div>
       <span className="taskItem">{props.title}</span>
 
-      {/* UI unchanged onClick as no change in state variable here, or in any of its incestor */}
+      {/* UI unchanged onClick as no change (IMMUTABLY) in state variable here, or in any of its incestor */}
       <button onClick={doHandleDelete}>delete</button>
     </div>
   );
