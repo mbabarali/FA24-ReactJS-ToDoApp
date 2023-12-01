@@ -5,7 +5,7 @@ import { useState } from "react"; //React Hook
 import "./AddTask.css";
 
 // Stateful Functional Component
-function AddTask() {
+function AddTask(props) {
   /*
     React Hooks (Hook fucntions) 
     - MUST be called within react components.
@@ -25,23 +25,27 @@ function AddTask() {
   let setAdd = arr[1];
 
   let message = "";
+  let taskTitle = "";
+
+  function handleInputChange(event) {
+    setAdd(false);
+    console.log("Input changed to ", event.target.value);
+  }
 
   function handleAdd() {
-    // add = true;
+    // Directly accessing DOM for input element
+    const inputField = document.getElementsByTagName("input");
+    taskTitle = inputField[0].value;
+    props.onAdd(taskTitle);
 
     /* Updating state variable obtained from the react hook */
     setAdd(true);
 
-    // [IMPORTANT]
-    // The "add" is not updated yet. See Browser Console (console.log message)
-    // It will update on next rendering of this component by React.js
-    console.log("After add button pressesd --> add = ", add);
-
-    message = (
-      <ShowMessage>
-        <i>Task Added!!!</i>
-      </ShowMessage>
-    );
+    // --- CLEAR VIEW using inputField[0].value = "";
+    //     Must clear input field using inputField[0].value = "";
+    //     so that input field shall get a fresh value from the
+    //     user on next task entry
+    inputField[0].value = ""; // Clear input field
   }
 
   if (add) {
@@ -61,15 +65,9 @@ function AddTask() {
   return (
     <div className="addTask_container">
       <h1>Add Task</h1>
-      <label>Add new task: </label>
-      <input type="text" />
-
-      {/* Updating UI with state variable --> "add" */}
-      <button onClick={handleAdd} disabled={add}>
-        Add
-      </button>
-
-      {/* Updating UI depending on state variable --> "add" */}
+      <label htmlFor="taskField">Add new task: </label>
+      <input type="text" id="taskField" onChange={handleInputChange} />
+      <button onClick={handleAdd}>Add</button>
       {message}
     </div>
   );
