@@ -23,6 +23,8 @@ function AddTask({ onAdd }) {
   let add = arr[0];
   let setAdd = arr[1];
 
+  const [showContent, setShowContent] = useState(true);
+
   let message = "";
   const taskTitle = useRef();
 
@@ -44,6 +46,14 @@ function AddTask({ onAdd }) {
     //     user on next task entry
     taskTitle.current.value = "";
   };
+
+  function toggleContentDisplay() {
+    // setShowContent(!showContent); // Approach 01: Strongly NOT Recommended
+    // setShowContent(showContent?false:true); // Approach 02: Strongly NOT Recommended
+
+    setShowContent((currentState) => !currentState); // Approach 03: Use of anonymous function is Strongly RECOMMENDED
+    // setShowContent(function (currentState) { return !currentState}); // Approach 04: Use of anonymous function is Strongly RECOMMENDED
+  }
 
   // ========= Conditional Rendering =========
   // ------------- with if-else --------------
@@ -137,19 +147,23 @@ function AddTask({ onAdd }) {
 
   return (
     <div className="addTask_container">
-      <h1>Add Task</h1>
-      <label htmlFor="taskField">Add new task: </label>
-      {/* Uncontrolled Input: When value is NOT controlled by React state */}
-      <input
-        ref={taskTitle}
-        type="text"
-        id="taskField"
-        onChange={handleInputChange}
-        // Two-Way Binding of 'taskTitle' not pssible as 'taskTitle' is not state hence any change in its value can not initiate re-rendering of the component
-        // value={taskTitle}
-      />
-      <button onClick={handleAdd}>Add</button>
-      {message}
+      <h1 onClick={toggleContentDisplay}>Add Task</h1>
+      {showContent && (
+        <div>
+          <label htmlFor="taskField">Add new task: </label>
+          {/* Uncontrolled Input: When value is NOT controlled by React state */}
+          <input
+            ref={taskTitle}
+            type="text"
+            id="taskField"
+            onChange={handleInputChange}
+            // Two-Way Binding of 'taskTitle' not pssible as 'taskTitle' is not state hence any change in its value can not initiate re-rendering of the component
+            // value={taskTitle}
+          />
+          <button onClick={handleAdd}>Add</button>
+          {message}
+        </div>
+      )}
     </div>
   );
 }
