@@ -75,13 +75,19 @@ function ManageTasks() {
 
   function handleDelete(id) {
     const taskInd = taskList.findIndex((task) => task.id === id);
+    console.log("taskList: ", taskList);
 
-    // !!! !!! REJECTED Approach !!! !!!
-    // !!! !!! REJECTED by React !!! !!!
-    // !!! !!! NO IMPACT on VDOM !!! !!!
-    // !!! !!! NO IMPACT on DOM  !!! !!!
-    // Mutating (i.e. changing) the state by accessing it directly
-    taskList[taskInd].trash = true; // Direct access
+    // ************** A HIGHLY RECOMMENDED APPROACH **************
+    // ************ Update State Variable(s) immutably ***********
+    // --- Three-step procedure to update the state, immutably ---
+
+    const updatedList = [...taskList]; // [STEP-1] Create copy // Shallow copy
+
+    updatedList[taskInd].trash = true; // [STEP-2] Update desired value(s) in copy
+    console.log("updatedList: ", updatedList);
+
+    setTaskList(updatedList); // [STEP-3] Update state with copy
+    console.log("taskInd: ", taskInd);
 
     console.log(
       "Task " + id + " at " + taskInd + " --> trash: ",
