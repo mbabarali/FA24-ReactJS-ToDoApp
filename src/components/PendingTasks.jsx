@@ -6,7 +6,7 @@ import "./PendingTasks.css";
 function PendingTasks() {
   return (
     <div className="pendingTask_container">
-      <h1>Pending Tasks</h1>
+      <h2>Pending Tasks</h2>
       {/* Each component is a separate instance created by React */}
       <TaskPending />
       <TaskPending />

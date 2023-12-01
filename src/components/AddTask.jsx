@@ -1,3 +1,5 @@
+import ShowMessage from "./ShowMessage";
+
 import "./AddTask.css";
 
 // Functional Component
@@ -8,6 +10,7 @@ function AddTask() {
       <label>Add new task: </label>
       <input type="text" />
       <button>Add</button>
+      <ShowMessage />
     </div>
   );
 }

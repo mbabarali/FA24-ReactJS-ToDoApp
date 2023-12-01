@@ -6,7 +6,7 @@ import "./CompletedTasks.css";
 function CompletedTasks() {
   return (
     <div className="completedTask_container">
-      <h1>Completed Tasks</h1>
+      <h2>Completed Tasks</h2>
       {/* Each component is a separate instance created by React */}
       <TaskCompleted />
       <TaskCompleted />
