@@ -1,32 +1,33 @@
 import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
 
-function PendingTasks() {
+function PendingTasks(props) {
+  const list = props.tasks.map((task, ind) => {
+    return (
+      <TaskPending
+        //Mandatory unique key for each item in the React list
+        key={ind}
+        title={task.title}
+        // JSX Slot --> Passing JSX code via attribute props
+        createDate={<span>{task.createDate}</span>}
+      />
+    );
+
+    // return (
+    //   <TaskPending
+    //     title={task.title}
+    //     // JSX Slot --> Passing JSX code via attribute props
+    //     // - For multiple JSX elements, use <div> or any other element as a wrapper
+    //     createDate={<span>{task.createDate}</span>}
+    //   />
+    // );
+  });
+
+  console.log(list);
   return (
     <div className="pendingTask_container">
       <h2>Pending Tasks</h2>
-      <TaskPending
-        title="Going to admission office"
-        // JSX Slot --> Passing JSX code via attribute props
-        // - For multiple JSX elements, use <div> or any other element as a wrapper
-        createDate={
-          <span>
-            <span>20</span>
-            <span>.10</span>
-            <span>.2023</span>
-          </span>
-        }
-      />
-      <TaskPending
-        title="Visit library"
-        // JSX Slot --> Passing JSX code via attribute props
-        createDate={<span>16.10.2023</span>}
-      />
-      <TaskPending
-        title="Attending seminar"
-        // JSX Slot --> Passing JSX code via attribute props
-        createDate={<span>19.10.2023</span>}
-      />
+      {list}
     </div>
   );
 }

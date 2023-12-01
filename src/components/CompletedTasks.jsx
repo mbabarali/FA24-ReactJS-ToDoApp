@@ -3,14 +3,23 @@ import TaskCompleted from "./TaskCompleted";
 import "./CompletedTasks.css";
 
 // Functional Component
-function CompletedTasks() {
+function CompletedTasks(props) {
+  const list = props.tasks.map((task, ind) => {
+    return (
+      <TaskCompleted
+        //Mandatory unique key for each item in the React list
+        key={ind}
+        title={task.title}
+      />
+    );
+
+    // return <TaskCompleted title={task.title} />;
+  });
+
   return (
     <div className="completedTask_container">
       <h2>Completed Tasks</h2>
-      {/* Each component is a separate instance created by React */}
-      <TaskCompleted title="Taking breakfast" />
-      <TaskCompleted title="Meet batch advisor" />
-      <TaskCompleted title="Community service" />
+      {list}
     </div>
   );
 }

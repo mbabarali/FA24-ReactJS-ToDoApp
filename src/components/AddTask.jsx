@@ -37,11 +37,11 @@ function AddTask() {
     // It will update on next rendering of this component by React.js
     console.log("After add button pressesd --> add = ", add);
 
-    // message = (
-    //   <ShowMessage>
-    //     <i>Task Added!!!</i>
-    //   </ShowMessage>
-    // );
+    message = (
+      <ShowMessage>
+        <i>Task Added!!!</i>
+      </ShowMessage>
+    );
   }
 
   if (add) {
