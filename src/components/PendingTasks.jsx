@@ -35,7 +35,15 @@ const PendingTasks = forwardRef(function (props, ref) {
   }
 
   const purge = function () {
-    console.log("Purge tasks ...");
+    console.log("[PendingTasks] Purge tasks ...");
+
+    InProgress.forEach((id) => {
+      onDelete(id);
+    });
+  };
+
+  const deleteInProgress = function () {
+    console.log("[PendingTasks] deleteInProgress tasks ...");
 
     InProgress.forEach((id) => {
       onDelete(id);
@@ -43,7 +51,13 @@ const PendingTasks = forwardRef(function (props, ref) {
   };
 
   // Creating a property in "ref": The name "current" is not necessary in react componenents. You can name it differently.
-  ref.current = purge;
+  ref.current = {
+    purge: () => {},
+    expire: () => {},
+  };
+
+  ref.current.purge = purge;
+  ref.current.deleteInProgress = deleteInProgress;
 
   const list = tasks.map((task, ind) => {
     return (
