@@ -2,11 +2,23 @@ import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
 import { useState } from "react";
 import { forwardRef } from "react";
+import { useImperativeHandle } from "react";
+import { useRef } from "react";
 
 // const PendingTasks = forwardRef(function (props, ref) {});
 
 // Stateful Functional Component
 const PendingTasks = forwardRef(function (props, ref) {
+  const purgeProgressingTasks = useRef();
+
+  useImperativeHandle(ref, () => {
+    return {
+      purgeAll() {
+        purgeProgressingTasks.current.click();
+      },
+    };
+  });
+
   const { tasks, onDone, onDelete } = props;
 
   const [InProgress, setInProgress] = useState([]);
@@ -89,7 +101,7 @@ const PendingTasks = forwardRef(function (props, ref) {
     // Event may bubble up from the child elements which also have event listener configured for the same event, 'onClick'
     <div
       className="pendingTask_container"
-      ref={ref}
+      ref={purgeProgressingTasks}
       onClick={purge}
       // onClickCapture={() => console.log("[onClick]: <div>")}
     >

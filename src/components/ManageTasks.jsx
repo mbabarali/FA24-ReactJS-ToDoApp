@@ -55,7 +55,7 @@ function ManageTasks(props) {
     console.log("[ManageTasks] Purge tasks ...");
     console.log("[ManageTasks] " + purgeInProgress.current);
 
-    purgeInProgress.current.click();
+    purgeInProgress.current.purgeAll();
   }
 
   return (
