@@ -50,15 +50,6 @@ const PendingTasks = forwardRef(function (props, ref) {
     });
   };
 
-  // Creating a property in "ref": The name "current" is not necessary in react componenents. You can name it differently.
-  ref.current = {
-    purge: () => {},
-    expire: () => {},
-  };
-
-  ref.current.purge = purge;
-  ref.current.deleteInProgress = deleteInProgress;
-
   const list = tasks.map((task, ind) => {
     return (
       <TaskPending
@@ -91,7 +82,17 @@ const PendingTasks = forwardRef(function (props, ref) {
   const Heading = props.headingContainer;
 
   return (
-    <div className="pendingTask_container">
+    // Event Bubbling vs. Event Capturing
+    // Event Bubbling ==> Event propagation from child element to the top most parent (with event listener for the same event) element
+    // Event Capturing ==> Event propagation from parent element to deepest child (with event listener for the same event) element
+
+    // Event may bubble up from the child elements which also have event listener configured for the same event, 'onClick'
+    <div
+      className="pendingTask_container"
+      ref={ref}
+      onClick={purge}
+      // onClickCapture={() => console.log("[onClick]: <div>")}
+    >
       <Heading>Pending Tasks</Heading>
       {list}
     </div>

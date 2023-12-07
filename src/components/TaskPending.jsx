@@ -10,7 +10,15 @@ function TaskPending(props) {
 
       <button
         // Arrow Function (An anonymous function)
-        onClick={() => onInProgress(id)}
+
+        // By default, event will bubble up through parent chain upto the top most parent 'windows',
+        // via all elements whihc have event listener configured for the same event, 'onClick'
+        onClick={(event) => {
+          console.log("[onClick]: <button> ");
+          event.stopPropagation();
+          onInProgress(id);
+        }}
+        // onClickCapture={() => console.log("[onClick]: <button>")}
       >
         progressing
       </button>
@@ -18,7 +26,8 @@ function TaskPending(props) {
       {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
       <button
         // Legacy Anonymous Function (An anonymous function)
-        onClick={function () {
+        onClick={function (event) {
+          event.stopPropagation();
           onDone(id);
         }}
       >
@@ -28,7 +37,10 @@ function TaskPending(props) {
       {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
       <button
         // Arrow Function (An anonymous function)
-        onClick={() => onDelete(id)}
+        onClick={(event) => {
+          event.stopPropagation();
+          onDelete(id);
+        }}
       >
         delete
       </button>
