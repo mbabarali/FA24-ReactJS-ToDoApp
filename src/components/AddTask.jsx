@@ -1,5 +1,6 @@
 import "./AddTask.css";
 import ShowMessage from "./ShowMessage";
+import Wrapper from "./Wrapper";
 
 import { useState } from "react"; //React Hook
 import { useRef } from "react"; //React Hook
@@ -149,7 +150,7 @@ function AddTask({ onAdd }) {
     <div className="addTask_container">
       <h1 onClick={toggleContentDisplay}>Add Task</h1>
       {showContent && (
-        <div>
+        <Wrapper>
           <label htmlFor="taskField">Add new task: </label>
           {/* Uncontrolled Input: When value is NOT controlled by React state */}
           <input
@@ -162,7 +163,7 @@ function AddTask({ onAdd }) {
           />
           <button onClick={handleAdd}>Add</button>
           {message}
-        </div>
+        </Wrapper>
       )}
     </div>
   );

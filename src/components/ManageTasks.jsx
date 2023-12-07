@@ -3,6 +3,9 @@ import CompletedTasks from "./CompletedTasks";
 // import ShowMessage from "./ShowMessage";
 import PurgedTasks from "./PurgedTasks";
 
+// import {Fragment} from "react"; // For Fragment
+import React from "react"; // For React.Fragment
+
 import { useState } from "react";
 import { useRef } from "react";
 
@@ -58,8 +61,13 @@ function ManageTasks(props) {
     purgeInProgress.current.purgeAll();
   }
 
+  // <React.Fragment></React.Fragment>
+  // OR
+  // <Fragment></Fragment>
+  // OR
+  // <></>
   return (
-    <div>
+    <React.Fragment>
       <h1 onClick={toggleContentDisplay}>Manage Tasks</h1>
       {showContent && (
         <div>
@@ -95,7 +103,7 @@ function ManageTasks(props) {
           ></PurgedTasks>
         </div>
       )}
-    </div>
+    </React.Fragment>
   );
 }
 
