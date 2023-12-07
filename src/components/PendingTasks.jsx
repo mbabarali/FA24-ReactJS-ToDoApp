@@ -1,9 +1,12 @@
 import "./PendingTasks.css";
 import TaskPending from "./TaskPending";
 import { useState } from "react";
+import { forwardRef } from "react";
+
+// const PendingTasks = forwardRef(function (props, ref) {});
 
 // Stateful Functional Component
-function PendingTasks(props) {
+const PendingTasks = forwardRef(function (props, ref) {
   const { tasks, onDone, onDelete } = props;
 
   const [InProgress, setInProgress] = useState([]);
@@ -30,6 +33,17 @@ function PendingTasks(props) {
 
     setInProgress(updatedState); // [STEP-3] Update state with copy
   }
+
+  const purge = function () {
+    console.log("Purge tasks ...");
+
+    InProgress.forEach((id) => {
+      onDelete(id);
+    });
+  };
+
+  // Creating a property in "ref": The name "current" is not necessary in react componenents. You can name it differently.
+  ref.current = purge;
 
   const list = tasks.map((task, ind) => {
     return (
@@ -68,6 +82,6 @@ function PendingTasks(props) {
       {list}
     </div>
   );
-}
+});
 
 export default PendingTasks;

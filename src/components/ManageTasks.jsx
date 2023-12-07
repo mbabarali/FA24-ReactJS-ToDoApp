@@ -4,12 +4,15 @@ import CompletedTasks from "./CompletedTasks";
 import PurgedTasks from "./PurgedTasks";
 
 import { useState } from "react";
+import { useRef } from "react";
 
 // Stateless Functional Component
 function ManageTasks(props) {
   const { taskList, onDone, onDelete, onRestore } = props;
 
   const [showContent, setShowContent] = useState(true);
+
+  const purgeInProgress = useRef();
 
   const pendingTasks = taskList.filter(function (task) {
     return task.done === false && task.trash === false;
@@ -48,12 +51,21 @@ function ManageTasks(props) {
     //    latest value to unnamed function at the time of execution
   }
 
+  function onPurge() {
+    console.log("[ManageTasks] Purge tasks ...");
+    console.log("[ManageTasks] " + purgeInProgress.current);
+
+    purgeInProgress.current();
+  }
+
   return (
     <div>
       <h1 onClick={toggleContentDisplay}>Manage Tasks</h1>
       {showContent && (
         <div>
+          <button onClick={onPurge}>Purge Tasks</button>
           <PendingTasks
+            ref={purgeInProgress}
             tasks={pendingTasks}
             onDone={onDone}
             onDelete={onDelete}
