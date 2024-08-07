@@ -154,17 +154,15 @@ function App() {
     <TaskListContext.Provider
       value={{
         taskList: taskList,
+        onDone: handleDone,
+        onDelete: handleDelete,
+        onRestore: handleRestore,
       }}
     >
       <div className="App">
         <h1>ToDo Application</h1>
         <AddTask onAdd={handleAdd}></AddTask>
-        <ManageTasks
-          // taskList={taskList}
-          onDone={handleDone}
-          onDelete={handleDelete}
-          onRestore={handleRestore}
-        ></ManageTasks>
+        <ManageTasks />
       </div>
     </TaskListContext.Provider>
   );

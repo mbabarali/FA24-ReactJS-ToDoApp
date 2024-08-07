@@ -5,6 +5,8 @@ import { forwardRef } from "react";
 import { useImperativeHandle } from "react";
 import { useRef } from "react";
 
+import TaskListContext from "../store/taskList-context";
+
 // const PendingTasks = forwardRef(function (props, ref) {});
 
 // Stateful Functional Component
@@ -19,7 +21,7 @@ const PendingTasks = forwardRef(function (props, ref) {
     };
   });
 
-  const { tasks, onDone, onDelete } = props;
+  const { tasks } = props;
 
   const [InProgress, setInProgress] = useState([]);
 
@@ -46,68 +48,65 @@ const PendingTasks = forwardRef(function (props, ref) {
     setInProgress(updatedState); // [STEP-3] Update state with copy
   }
 
-  const purge = function () {
-    console.log("[PendingTasks] Purge tasks ...");
-
-    InProgress.forEach((id) => {
-      onDelete(id);
-    });
-  };
-
-  const deleteInProgress = function () {
-    console.log("[PendingTasks] deleteInProgress tasks ...");
-
-    InProgress.forEach((id) => {
-      onDelete(id);
-    });
-  };
-
-  const list = tasks.map((task, ind) => {
-    return (
-      <TaskPending
-        //Mandatory unique key for each item in the React list
-        key={ind}
-        title={task.title}
-        // JSX Slot --> Passing JSX code via attribute props
-        createDate={<span>{task.createDate}</span>}
-        id={task.id}
-        onDone={onDone}
-        onDelete={onDelete}
-        onInProgress={onInProgress}
-        className={InProgress.includes(task.id) ? "inProgress" : ""}
-      />
-    );
-
-    // return (
-    //   <TaskPending
-    //     title={task.title}
-    //     // JSX Slot --> Passing JSX code via attribute props
-    //     // - For multiple JSX elements, use <div> or any other element as a wrapper
-    //     createDate={<span>{task.createDate}</span>}
-    //   />
-    // );
-  });
-
-  console.log(list);
-
   // Variable name which is used as placeholder of an element must start with capital letter to stay consistent with component naming convention in React (e.g. PascalCase notation), such as 'Heading'
   const Heading = props.headingContainer;
 
   return (
-    // Event Bubbling vs. Event Capturing
-    // Event Bubbling ==> Event propagation from child element to the top most parent (with event listener for the same event) element
-    // Event Capturing ==> Event propagation from parent element to deepest child (with event listener for the same event) element
+    <TaskListContext.Consumer>
+      {(ctx) => {
+        const purge = function () {
+          console.log("[PendingTasks] Purge tasks ...");
 
-    // Event may bubble up from the child elements which also have event listener configured for the same event, 'onClick'
-    <div
-      className="pendingTask_container"
-      ref={purgeProgressingTasks}
-      onClick={purge}
-      // onClickCapture={() => console.log("[onClick]: <div>")}
-    >
-      <Heading>Pending Tasks</Heading>
-      {list}
-    </div>
+          InProgress.forEach((id) => {
+            ctx.onDelete(id);
+          });
+        };
+
+        const deleteInProgress = function () {
+          console.log("[PendingTasks] deleteInProgress tasks ...");
+
+          InProgress.forEach((id) => {
+            ctx.onDelete(id);
+          });
+        };
+
+        const list = tasks.map((task, ind) => {
+          return (
+            <TaskPending
+              //Mandatory unique key for each item in the React list
+              key={ind}
+              title={task.title}
+              // JSX Slot --> Passing JSX code via attribute props
+              createDate={<span>{task.createDate}</span>}
+              id={task.id}
+              onDone={ctx.onDone}
+              onDelete={ctx.onDelete}
+              onInProgress={onInProgress}
+              className={InProgress.includes(task.id) ? "inProgress" : ""}
+            />
+          );
+        });
+
+        console.log(list);
+
+        return (
+          // Event Bubbling vs. Event Capturing
+          // Event Bubbling ==> Event propagation from child element to the top most parent (with event listener for the same event) element
+          // Event Capturing ==> Event propagation from parent element to deepest child (with event listener for the same event) element
+
+          // Event may bubble up from the child elements which also have event listener configured for the same event, 'onClick'
+          <div
+            className="pendingTask_container"
+            ref={purgeProgressingTasks}
+            onClick={purge}
+            // onClickCapture={() => console.log("[onClick]: <div>")}
+          >
+            <Heading>Pending Tasks</Heading>
+            {list}
+          </div>
+        );
+      }}
+    </TaskListContext.Consumer>
   );
 });
 

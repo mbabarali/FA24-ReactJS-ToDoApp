@@ -12,9 +12,7 @@ import { useRef } from "react";
 import TaskListContext from "../store/taskList-context";
 
 // Stateless Functional Component
-function ManageTasks(props) {
-  const { onDone, onDelete, onRestore } = props;
-
+function ManageTasks() {
   const [showContent, setShowContent] = useState(true);
 
   const purgeInProgress = useRef();
@@ -80,8 +78,6 @@ function ManageTasks(props) {
                 <PendingTasks
                   ref={purgeInProgress}
                   tasks={pendingTasks}
-                  onDone={onDone}
-                  onDelete={onDelete}
                   // Built-in JSX element identifiers are passed as string
                   headingContainer="h2"
 
@@ -90,7 +86,6 @@ function ManageTasks(props) {
                 ></PendingTasks>
                 <CompletedTasks
                   tasks={completedTasks}
-                  onDelete={onDelete}
                   // Built-in JSX element identifiers are passed as string
                   HeadingContainer="h2"
 
@@ -99,7 +94,6 @@ function ManageTasks(props) {
                 ></CompletedTasks>
                 <PurgedTasks
                   tasks={deletedTasks}
-                  onRestore={onRestore}
                   // Built-in JSX element identifiers are passed as string
                   HeadingContainer="h2"
 
