@@ -6,6 +6,7 @@ import { useReducer } from "react";
 import "./App.css";
 
 import { INITIAL_TASKS } from "./data/initialTasks";
+import TaskListContext from "./store/taskList-context";
 
 // Reducer function must be defined outside the component
 // (e.g. App) to avoid recreation of reducer function on
@@ -150,16 +151,22 @@ function App() {
 
   // Returning JSX code which is multiline or/and contains nested elements
   return (
-    <div className="App">
-      <h1>ToDo Application</h1>
-      <AddTask onAdd={handleAdd}></AddTask>
-      <ManageTasks
-        taskList={taskList}
-        onDone={handleDone}
-        onDelete={handleDelete}
-        onRestore={handleRestore}
-      ></ManageTasks>
-    </div>
+    <TaskListContext.Provider
+      value={{
+        taskList: taskList,
+      }}
+    >
+      <div className="App">
+        <h1>ToDo Application</h1>
+        <AddTask onAdd={handleAdd}></AddTask>
+        <ManageTasks
+          // taskList={taskList}
+          onDone={handleDone}
+          onDelete={handleDelete}
+          onRestore={handleRestore}
+        ></ManageTasks>
+      </div>
+    </TaskListContext.Provider>
   );
 }
 
