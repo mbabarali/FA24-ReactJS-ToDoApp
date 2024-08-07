@@ -21,8 +21,6 @@ const PendingTasks = forwardRef(function (props, ref) {
     };
   });
 
-  const { tasks } = props;
-
   const [InProgress, setInProgress] = useState([]);
 
   function onInProgress(id) {
@@ -54,6 +52,12 @@ const PendingTasks = forwardRef(function (props, ref) {
   return (
     <TaskListContext.Consumer>
       {(ctx) => {
+        const pendingTasks = ctx.taskList.filter(function (task) {
+          return task.done === false && task.trash === false;
+        });
+
+        // console.log("pendingTasks ---> ", pendingTasks);
+
         const purge = function () {
           console.log("[PendingTasks] Purge tasks ...");
 
@@ -70,7 +74,7 @@ const PendingTasks = forwardRef(function (props, ref) {
           });
         };
 
-        const list = tasks.map((task, ind) => {
+        const list = pendingTasks.map((task, ind) => {
           return (
             <TaskPending
               //Mandatory unique key for each item in the React list

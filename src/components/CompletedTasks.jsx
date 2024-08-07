@@ -12,7 +12,13 @@ function CompletedTasks({ tasks, HeadingContainer }) {
   return (
     <TaskListContext.Consumer>
       {(ctx) => {
-        const list = tasks.map((task, ind) => {
+        const completedTasks = ctx.taskList.filter(
+          (task) => task.done === true && task.trash === false
+        );
+
+        // console.log("completedTasks ---> ", completedTasks);
+
+        const list = completedTasks.map((task, ind) => {
           return (
             <TaskCompleted
               //Mandatory unique key for each item in the React list

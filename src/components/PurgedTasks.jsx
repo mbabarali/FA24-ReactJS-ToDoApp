@@ -10,7 +10,11 @@ function PurgedTasks({ tasks, HeadingContainer }) {
   return (
     <TaskListContext.Consumer>
       {(ctx) => {
-        const list = tasks.map((task, ind) => {
+        const deletedTasks = ctx.taskList.filter((task) => task.trash === true);
+
+        // console.log("deletedTasks ---> ", deletedTasks);
+
+        const list = deletedTasks.map((task, ind) => {
           // return <TaskPurged title={task.title} />;
 
           //Mandatory unique key for each item in the React list

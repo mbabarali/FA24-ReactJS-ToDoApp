@@ -55,20 +55,6 @@ function ManageTasks() {
   return (
     <TaskListContext.Consumer>
       {(ctx) => {
-        const pendingTasks = ctx.taskList.filter(function (task) {
-          return task.done === false && task.trash === false;
-        });
-
-        const completedTasks = ctx.taskList.filter(
-          (task) => task.done === true && task.trash === false
-        );
-
-        const deletedTasks = ctx.taskList.filter((task) => task.trash === true);
-
-        // console.log("pendingTasks ---> ", pendingTasks);
-        // console.log("completedTasks ---> ", completedTasks);
-        // console.log("deletedTasks ---> ", deletedTasks);
-
         return (
           <React.Fragment>
             <h1 onClick={toggleContentDisplay}>Manage Tasks</h1>
@@ -77,7 +63,6 @@ function ManageTasks() {
                 <button onClick={onPurge}>Purge Tasks</button>
                 <PendingTasks
                   ref={purgeInProgress}
-                  tasks={pendingTasks}
                   // Built-in JSX element identifiers are passed as string
                   headingContainer="h2"
 
@@ -85,7 +70,6 @@ function ManageTasks() {
                   // headingContainer={ShowMessage} // Require import
                 ></PendingTasks>
                 <CompletedTasks
-                  tasks={completedTasks}
                   // Built-in JSX element identifiers are passed as string
                   HeadingContainer="h2"
 
@@ -93,7 +77,6 @@ function ManageTasks() {
                   // HeadingContainer={ShowMessage} // Require import
                 ></CompletedTasks>
                 <PurgedTasks
-                  tasks={deletedTasks}
                   // Built-in JSX element identifiers are passed as string
                   HeadingContainer="h2"
 
