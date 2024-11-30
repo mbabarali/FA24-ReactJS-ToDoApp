@@ -157,6 +157,7 @@ function App() {
         onDone: handleDone,
         onDelete: handleDelete,
         onRestore: handleRestore,
+        onAdd: handleAdd,
       }}
     >
       <div className="App">

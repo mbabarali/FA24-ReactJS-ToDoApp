@@ -6,6 +6,7 @@ const TaskListContext = createContext({
   onDone: () => {},
   onDelete: () => {},
   onRestore: () => {},
+  onAdd: () => {},
 });
 
 export default TaskListContext;

@@ -4,14 +4,20 @@ import Wrapper from "./Wrapper";
 
 import { useState } from "react"; //React Hook
 import { useRef } from "react"; //React Hook
+import { useContext } from "react"; //React Hook
 
-function AddTask({ onAdd }) {
+import TaskListContext from "../store/taskList-context";
+
+// function AddTask({ onAdd }) {
+function AddTask() {
   /*
     React Hooks (Hook fucntions) 
     - MUST be called within react components.
     - MUST be called within react hook/ custom hook.
     - MUST be called at the top of the components before any other nested block.
   */
+
+  const { onAdd } = useContext(TaskListContext);
 
   // Following line returns reference to the new variable when the component (AddTask)
   // is rendered for the first time. On every re-rendering of the component (AddTask),
