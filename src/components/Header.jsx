@@ -8,16 +8,16 @@ function Header() {
           <a href="/">Home</a>
         </li>
         <li>
-          <a href="#">New</a>
+          <a href="/new-task">New</a>
         </li>
         <li>
-          <a href="#">Scheduled</a>
+          <a href="/scheduled-tasks">Scheduled</a>
         </li>
         <li>
-          <a href="#">Finished</a>
+          <a href="/finished-tasks">Finished</a>
         </li>
         <li>
-          <a href="#">Trash</a>
+          <a href="/deleted-tasks">Trash</a>
         </li>
       </ul>
     </header>
