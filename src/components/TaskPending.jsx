@@ -44,6 +44,16 @@ function TaskPending(props) {
       >
         delete
       </button>
+
+      {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
+      <button // Arrow Function (An anonymous function)
+        onClick={(event) => {
+          event.stopPropagation(); //Stop event bubbling
+          // onEdit(id);
+        }}
+      >
+        edit
+      </button>
     </div>
   );
 }

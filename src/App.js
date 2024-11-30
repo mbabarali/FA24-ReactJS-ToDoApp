@@ -13,6 +13,7 @@ import Scheduled from "./pages/Scheduled";
 import Finished from "./pages/Finished";
 import Trash from "./pages/Trash";
 import Error from "./pages/Error";
+import Update from "./pages/Update";
 
 // ========================================
 // -------------------------------
@@ -41,6 +42,30 @@ const routes_op1 = [
     path: "/deleted-tasks",
     element: <Trash></Trash>,
   },
+  // {
+  //   path: "/scheduled-tasks-1",
+  //   element: <Update></Update>,
+  // },
+  // {
+  //   path: "/scheduled-tasks-2",
+  //   element: <Update></Update>,
+  // },
+  // {
+  //   path: "/scheduled-tasks-3",
+  //   element: <Update></Update>,
+  // },
+  {
+    path: "/scheduled-tasks/1",
+    element: <Update></Update>,
+  },
+  {
+    path: "/scheduled-tasks/2",
+    element: <Update></Update>,
+  },
+  {
+    path: "/scheduled-tasks/3",
+    element: <Update></Update>,
+  },
 ];
 // -------------------------------
 // Defining Routes - Option 2
@@ -51,6 +76,14 @@ const routes_op1 = [
 //     <Route path="/scheduled-tasks" element={<Scheduled></Scheduled>}></Route>
 //     <Route path="/finished-tasks" element={<Finished></Finished>}></Route>
 //     <Route path="/deleted-tasks" element={<Trash></Trash>}></Route>
+//     {/*
+//     <Route path="/scheduled-tasks-1" element={<Update></Update>}></Route>
+//     <Route path="/scheduled-tasks-2" element={<Update></Update>}></Route>
+//     <Route path="/scheduled-tasks-3" element={<Update></Update>}></Route>
+//     */}
+//     <Route path="/scheduled-tasks/1" element={<Update></Update>}></Route>
+//     <Route path="/scheduled-tasks/2" element={<Update></Update>}></Route>
+//     <Route path="/scheduled-tasks/3" element={<Update></Update>}></Route>
 //   </Route>
 // );
 
