@@ -12,6 +12,7 @@ import New from "./pages/New";
 import Scheduled from "./pages/Scheduled";
 import Finished from "./pages/Finished";
 import Trash from "./pages/Trash";
+import Error from "./pages/Error";
 
 // ========================================
 // -------------------------------
@@ -22,6 +23,7 @@ const routes_op1 = [
   {
     path: "/",
     element: <Home></Home>,
+    errorElement: <Error></Error>,
   },
   {
     path: "/new-task",
@@ -44,7 +46,7 @@ const routes_op1 = [
 // Defining Routes - Option 2
 // const routes_op2 = createRoutesFromElements(
 //   <Route>
-//     <Route path="/" element={<Home></Home>}></Route>
+//     <Route path="/" element={<Home></Home>} errorElement={<Error />}></Route>
 //     <Route path="/new-task" element={<New></New>}></Route>
 //     <Route path="/scheduled-tasks" element={<Scheduled></Scheduled>}></Route>
 //     <Route path="/finished-tasks" element={<Finished></Finished>}></Route>
