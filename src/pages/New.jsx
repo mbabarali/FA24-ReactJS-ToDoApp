@@ -1,6 +1,12 @@
 import AddTask from "../components/AddTask";
+import Header from "../components/Header";
 
 function New() {
-  return <AddTask />;
+  return (
+    <>
+      <Header />
+      <AddTask />
+    </>
+  );
 }
 export default New;

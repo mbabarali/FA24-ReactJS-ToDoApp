@@ -7,8 +7,6 @@ import { RouterProvider } from "react-router-dom";
 
 import TaskListProvider from "./store/TaskListProvider";
 
-import Header from "./components/Header";
-
 import Home from "./pages/Home";
 import New from "./pages/New";
 import Scheduled from "./pages/Scheduled";
@@ -69,7 +67,6 @@ function App() {
   // Returning JSX code which is multiline or/and contains nested elements
   return (
     <TaskListProvider>
-      <Header></Header>
       <RouterProvider router={router}></RouterProvider>
     </TaskListProvider>
   );

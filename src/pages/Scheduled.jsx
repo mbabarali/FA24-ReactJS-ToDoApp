@@ -1,7 +1,13 @@
 import PendingTasks from "../components/PendingTasks";
+import Header from "../components/Header";
 
 function Scheduled() {
-  return <PendingTasks headingContainer="h2" />;
+  return (
+    <>
+      <Header />
+      <PendingTasks headingContainer="h2" />
+    </>
+  );
 }
 
 export default Scheduled;

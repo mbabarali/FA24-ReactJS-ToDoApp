@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
@@ -5,19 +6,19 @@ function Header() {
     <header>
       <ul>
         <li>
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="/new-task">New</a>
+          <Link to="/new-task">New</Link>
         </li>
         <li>
-          <a href="/scheduled-tasks">Scheduled</a>
+          <Link to="/scheduled-tasks">Scheduled</Link>
         </li>
         <li>
-          <a href="/finished-tasks">Finished</a>
+          <Link to="/finished-tasks">Finished</Link>
         </li>
         <li>
-          <a href="/deleted-tasks">Trash</a>
+          <Link to="/deleted-tasks">Trash</Link>
         </li>
       </ul>
     </header>
