@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 function Header() {
@@ -6,19 +6,48 @@ function Header() {
     <header>
       <ul>
         <li>
-          <Link to="/">Home</Link>
+          <NavLink
+            to="/"
+            className={(linkStatus) =>
+              linkStatus.isActive ? "active" : undefined
+            }
+            // end
+          >
+            Home
+          </NavLink>
         </li>
         <li>
-          <Link to="/new-task">New</Link>
+          <NavLink
+            to="/new-task"
+            className={({ isActive }) => (isActive ? "active" : undefined)}
+          >
+            New
+          </NavLink>
         </li>
         <li>
-          <Link to="/scheduled-tasks">Scheduled</Link>
+          <NavLink
+            to="/scheduled-tasks"
+            className={({ isActive }) => (isActive ? "active" : undefined)}
+            // end
+          >
+            Scheduled
+          </NavLink>
         </li>
         <li>
-          <Link to="/finished-tasks">Finished</Link>
+          <NavLink
+            to="/finished-tasks"
+            className={({ isActive }) => (isActive ? "active" : undefined)}
+          >
+            Finished
+          </NavLink>
         </li>
         <li>
-          <Link to="/deleted-tasks">Trash</Link>
+          <NavLink
+            to="/deleted-tasks"
+            className={({ isActive }) => (isActive ? "active" : undefined)}
+          >
+            Trash
+          </NavLink>
         </li>
       </ul>
     </header>

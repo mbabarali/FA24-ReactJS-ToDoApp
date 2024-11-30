@@ -14,3 +14,7 @@ ul {
 ul a {
   text-decoration: none;
 }
+
+header .active {
+  color: goldenrod;
+}
