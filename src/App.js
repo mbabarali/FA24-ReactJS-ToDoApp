@@ -23,34 +23,35 @@ import Update from "./pages/Update";
 // Defining Routes - Option 1
 const routes_op1 = [
   {
-    path: "/",
+    path: "/user",
     element: <UserLayout />,
     errorElement: <Error source="USER"></Error>,
     children: [
+      // Relative Paths (without starting /)
       {
-        path: "/",
+        path: "",
         element: <Home></Home>,
         errorElement: <Error source="USER/HOME"></Error>,
       },
       {
-        path: "/new-task",
+        path: "new-task",
         element: <New></New>,
       },
       {
-        path: "/scheduled-tasks",
+        path: "scheduled-tasks",
         element: <Scheduled></Scheduled>,
         errorElement: <Error source="USER/SCHEDULED-TASKS"></Error>,
       },
       {
-        path: "/finished-tasks",
+        path: "finished-tasks",
         element: <Finished></Finished>,
       },
       {
-        path: "/deleted-tasks",
+        path: "deleted-tasks",
         element: <Trash></Trash>,
       },
       {
-        path: "/scheduled-tasks/:taskId",
+        path: "scheduled-tasks/:taskId",
         element: <Update></Update>,
       },
     ],
@@ -59,13 +60,13 @@ const routes_op1 = [
 // -------------------------------
 // Defining Routes - Option 2
 // const routes_op2 = createRoutesFromElements(
-//   <Route>
-//     <Route path="/" element={<Home></Home>} errorElement: {<Error source="HOME" />}></Route>
-//     <Route path="/new-task" element={<New></New>}></Route>
-//     <Route path="/scheduled-tasks" element={<Scheduled></Scheduled>} errorElement: {<Error source="SCHEDULED-TASKS" />}></Route>
-//     <Route path="/finished-tasks" element={<Finished></Finished>}></Route>
-//     <Route path="/deleted-tasks" element={<Trash></Trash>}></Route>
-//     <Route path="/scheduled-tasks/:taskId" element={<Update></Update>}></Route>
+//   <Route path="user" element={<UserLayout></UserLayout>} errorElement={<Error source="USER"/>}>
+//     <Route path="" element={<Home></Home>} errorElement: {<Error source="HOME" />}></Route>
+//     <Route path="new-task" element={<New></New>}></Route>
+//     <Route path="scheduled-tasks" element={<Scheduled></Scheduled>} errorElement: {<Error source="SCHEDULED-TASKS" />}></Route>
+//     <Route path="finished-tasks" element={<Finished></Finished>}></Route>
+//     <Route path="deleted-tasks" element={<Trash></Trash>}></Route>
+//     <Route path="scheduled-tasks/:taskId" element={<Update></Update>}></Route>
 //   </Route>
 // );
 

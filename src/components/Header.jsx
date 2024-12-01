@@ -5,9 +5,10 @@ function Header() {
   return (
     <header>
       <ul>
+        {/* Relative Paths (without starting /) */}
         <li>
           <NavLink
-            to="/"
+            to=""
             className={(linkStatus) =>
               linkStatus.isActive ? "active" : undefined
             }
@@ -18,7 +19,7 @@ function Header() {
         </li>
         <li>
           <NavLink
-            to="/new-task"
+            to="new-task"
             className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             New
@@ -26,7 +27,7 @@ function Header() {
         </li>
         <li>
           <NavLink
-            to="/scheduled-tasks"
+            to="scheduled-tasks"
             className={({ isActive }) => (isActive ? "active" : undefined)}
             // end
           >
@@ -35,7 +36,7 @@ function Header() {
         </li>
         <li>
           <NavLink
-            to="/finished-tasks"
+            to="finished-tasks"
             className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             Finished
@@ -43,7 +44,7 @@ function Header() {
         </li>
         <li>
           <NavLink
-            to="/deleted-tasks"
+            to="deleted-tasks"
             className={({ isActive }) => (isActive ? "active" : undefined)}
           >
             Trash

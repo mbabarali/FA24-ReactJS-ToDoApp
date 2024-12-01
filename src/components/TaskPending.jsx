@@ -52,6 +52,7 @@ function TaskPending(props) {
 
       {/* ---------- OPTION 1: Using useNavigate Hook ---------- */}
       {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
+      {/* Relative Paths (without starting /) */}
       {/* <button
         // Arrow Function (An anonymous function)
         // onClick={(event) => {
@@ -60,7 +61,7 @@ function TaskPending(props) {
         // }}
         onClick={(event) => {
           event.stopPropagation(); //Stop event bubbling
-          navigate(`/scheduled-tasks/${id}`);
+          navigate(`scheduled-tasks/${id}`); // Relative Paths (without starting /) 
         }}
       >
         edit
@@ -68,9 +69,12 @@ function TaskPending(props) {
 
       {/* ---------- OPTION 2: Using <Link> ---------- */}
       {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
+      {/* Absolute Paths (starting /) */}
       <Link
         onClick={(event) => event.stopPropagation()} //Stop event bubbling
-        to={`/scheduled-tasks/${id}`}
+        to={`/user/scheduled-tasks/${id}`} // Absolute Path
+        // relative="route" // [Default]
+        // relative="path"
         className="linkToButton"
       >
         edit
