@@ -6,6 +6,7 @@ import { RouterProvider } from "react-router-dom";
 // import { Route } from "react-router-dom";
 
 import TaskListProvider from "./store/TaskListProvider";
+import UserLayout from "./layouts/UserLayout";
 
 import Home from "./pages/Home";
 import New from "./pages/New";
@@ -23,29 +24,36 @@ import Update from "./pages/Update";
 const routes_op1 = [
   {
     path: "/",
-    element: <Home></Home>,
-    errorElement: <Error source="HOME"></Error>,
-  },
-  {
-    path: "/new-task",
-    element: <New></New>,
-  },
-  {
-    path: "/scheduled-tasks",
-    element: <Scheduled></Scheduled>,
-    errorElement: <Error source="SCHEDULED-TASKS"></Error>,
-  },
-  {
-    path: "/finished-tasks",
-    element: <Finished></Finished>,
-  },
-  {
-    path: "/deleted-tasks",
-    element: <Trash></Trash>,
-  },
-  {
-    path: "/scheduled-tasks/:taskId",
-    element: <Update></Update>,
+    element: <UserLayout />,
+    errorElement: <Error source="USER"></Error>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+        errorElement: <Error source="USER/HOME"></Error>,
+      },
+      {
+        path: "/new-task",
+        element: <New></New>,
+      },
+      {
+        path: "/scheduled-tasks",
+        element: <Scheduled></Scheduled>,
+        errorElement: <Error source="USER/SCHEDULED-TASKS"></Error>,
+      },
+      {
+        path: "/finished-tasks",
+        element: <Finished></Finished>,
+      },
+      {
+        path: "/deleted-tasks",
+        element: <Trash></Trash>,
+      },
+      {
+        path: "/scheduled-tasks/:taskId",
+        element: <Update></Update>,
+      },
+    ],
   },
 ];
 // -------------------------------
