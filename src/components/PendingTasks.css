@@ -6,3 +6,15 @@
 .inProgress {
   color: green;
 }
+
+.linkToButton {
+  text-decoration: none;
+  color: black;
+  border: 1px solid gray;
+  font-size: 0.8rem;
+  background-color: aquamarine;
+  border-radius: 2px;
+  padding-left: 1px;
+  padding-right: 1px;
+  font-family: Arial, Helvetica, sans-serif;
+}

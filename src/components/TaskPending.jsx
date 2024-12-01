@@ -1,7 +1,12 @@
+// import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 // Stateless Functional Component
 function TaskPending(props) {
   const { id, createDate, title, className } = props;
   const { onDone, onDelete, onInProgress } = props;
+
+  // const navigate = useNavigate();
 
   return (
     <div className={className}>
@@ -45,15 +50,31 @@ function TaskPending(props) {
         delete
       </button>
 
+      {/* ---------- OPTION 1: Using useNavigate Hook ---------- */}
       {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
-      <button // Arrow Function (An anonymous function)
+      {/* <button
+        // Arrow Function (An anonymous function)
+        // onClick={(event) => {
+        //   event.stopPropagation();
+        //   onEdit(id);
+        // }}
         onClick={(event) => {
           event.stopPropagation(); //Stop event bubbling
-          // onEdit(id);
+          navigate(`/scheduled-tasks/${id}`);
         }}
       >
         edit
-      </button>
+      </button> */}
+
+      {/* ---------- OPTION 2: Using <Link> ---------- */}
+      {/* This component's UI will change onClick as result of the change in state variable in its incestor */}
+      <Link
+        onClick={(event) => event.stopPropagation()} //Stop event bubbling
+        to={`/scheduled-tasks/${id}`}
+        className="linkToButton"
+      >
+        edit
+      </Link>
     </div>
   );
 }

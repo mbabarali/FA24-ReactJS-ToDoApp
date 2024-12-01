@@ -54,16 +54,20 @@ const routes_op1 = [
   //   path: "/scheduled-tasks-3",
   //   element: <Update></Update>,
   // },
+  // {
+  //   path: "/scheduled-tasks/1",
+  //   element: <Update></Update>,
+  // },
+  // {
+  //   path: "/scheduled-tasks/2",
+  //   element: <Update></Update>,
+  // },
+  // {
+  //   path: "/scheduled-tasks/3",
+  //   element: <Update></Update>,
+  // },
   {
-    path: "/scheduled-tasks/1",
-    element: <Update></Update>,
-  },
-  {
-    path: "/scheduled-tasks/2",
-    element: <Update></Update>,
-  },
-  {
-    path: "/scheduled-tasks/3",
+    path: "/scheduled-tasks/:taskId",
     element: <Update></Update>,
   },
 ];
@@ -80,10 +84,11 @@ const routes_op1 = [
 //     <Route path="/scheduled-tasks-1" element={<Update></Update>}></Route>
 //     <Route path="/scheduled-tasks-2" element={<Update></Update>}></Route>
 //     <Route path="/scheduled-tasks-3" element={<Update></Update>}></Route>
-//     */}
 //     <Route path="/scheduled-tasks/1" element={<Update></Update>}></Route>
 //     <Route path="/scheduled-tasks/2" element={<Update></Update>}></Route>
 //     <Route path="/scheduled-tasks/3" element={<Update></Update>}></Route>
+//     */}
+//     <Route path="/scheduled-tasks/:taskId" element={<Update></Update>}></Route>
 //   </Route>
 // );
 
