@@ -24,7 +24,7 @@ const routes_op1 = [
   {
     path: "/",
     element: <Home></Home>,
-    errorElement: <Error></Error>,
+    errorElement: <Error source="HOME"></Error>,
   },
   {
     path: "/new-task",
@@ -33,6 +33,7 @@ const routes_op1 = [
   {
     path: "/scheduled-tasks",
     element: <Scheduled></Scheduled>,
+    errorElement: <Error source="SCHEDULED-TASKS"></Error>,
   },
   {
     path: "/finished-tasks",
@@ -42,30 +43,6 @@ const routes_op1 = [
     path: "/deleted-tasks",
     element: <Trash></Trash>,
   },
-  // {
-  //   path: "/scheduled-tasks-1",
-  //   element: <Update></Update>,
-  // },
-  // {
-  //   path: "/scheduled-tasks-2",
-  //   element: <Update></Update>,
-  // },
-  // {
-  //   path: "/scheduled-tasks-3",
-  //   element: <Update></Update>,
-  // },
-  // {
-  //   path: "/scheduled-tasks/1",
-  //   element: <Update></Update>,
-  // },
-  // {
-  //   path: "/scheduled-tasks/2",
-  //   element: <Update></Update>,
-  // },
-  // {
-  //   path: "/scheduled-tasks/3",
-  //   element: <Update></Update>,
-  // },
   {
     path: "/scheduled-tasks/:taskId",
     element: <Update></Update>,
@@ -75,19 +52,11 @@ const routes_op1 = [
 // Defining Routes - Option 2
 // const routes_op2 = createRoutesFromElements(
 //   <Route>
-//     <Route path="/" element={<Home></Home>} errorElement={<Error />}></Route>
+//     <Route path="/" element={<Home></Home>} errorElement: {<Error source="HOME" />}></Route>
 //     <Route path="/new-task" element={<New></New>}></Route>
-//     <Route path="/scheduled-tasks" element={<Scheduled></Scheduled>}></Route>
+//     <Route path="/scheduled-tasks" element={<Scheduled></Scheduled>} errorElement: {<Error source="SCHEDULED-TASKS" />}></Route>
 //     <Route path="/finished-tasks" element={<Finished></Finished>}></Route>
 //     <Route path="/deleted-tasks" element={<Trash></Trash>}></Route>
-//     {/*
-//     <Route path="/scheduled-tasks-1" element={<Update></Update>}></Route>
-//     <Route path="/scheduled-tasks-2" element={<Update></Update>}></Route>
-//     <Route path="/scheduled-tasks-3" element={<Update></Update>}></Route>
-//     <Route path="/scheduled-tasks/1" element={<Update></Update>}></Route>
-//     <Route path="/scheduled-tasks/2" element={<Update></Update>}></Route>
-//     <Route path="/scheduled-tasks/3" element={<Update></Update>}></Route>
-//     */}
 //     <Route path="/scheduled-tasks/:taskId" element={<Update></Update>}></Route>
 //   </Route>
 // );

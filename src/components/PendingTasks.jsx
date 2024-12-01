@@ -12,6 +12,11 @@ import TaskListContext from "../store/taskList-context";
 
 // Stateful Functional Component
 const PendingTasks = forwardRef(function (props, ref) {
+  // --- Uncomment to observe error handling ---
+  // if (true) {
+  //   throw new Error("An error found."); /// Manually inform about Error.
+  // }
+
   const purgeProgressingTasks = useRef();
 
   const ctx = useContext(TaskListContext);

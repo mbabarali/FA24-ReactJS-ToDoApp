@@ -1,10 +1,10 @@
 import Header from "../components/Header";
 
-function Error() {
+function Error({ source }) {
   return (
     <>
       <Header></Header>
-      <h1 className="App">An Error Occured </h1>
+      <h1 className="App">{source} ERROR</h1>
     </>
   );
 }
