@@ -9,6 +9,8 @@ import TaskListProvider from "./store/TaskListProvider";
 import UserLayout from "./layouts/UserLayout";
 import AdminLayout from "./layouts/AdminLayout";
 
+import SignIn from "./pages/SignIn";
+
 import AdminHome from "./pages/admin/Home"; // Default export renamed
 import AdminNew from "./pages/admin/New"; // Default export renamed
 
@@ -26,6 +28,11 @@ import Update from "./pages/Update";
 // -------------------------------
 // Defining Routes - Option 1
 const routes_op1 = [
+  {
+    path: "/",
+    element: <SignIn></SignIn>,
+    errorElement: <Error source="ROOT"></Error>,
+  },
   {
     path: "/user",
     element: <UserLayout />,
@@ -81,6 +88,11 @@ const routes_op1 = [
 // Defining Routes - Option 2
 // const routes_op2 = createRoutesFromElements(
 //   <Route>
+//     <Route
+//       path="/"
+//       element={<SignIn></SignIn>}
+//       errorElement={<Error source="ROOT" />}
+//     ></Route>
 //     <Route
 //       path="user"
 //       element={<UserLayout></UserLayout>}
