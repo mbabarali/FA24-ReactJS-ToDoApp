@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
 
@@ -52,13 +52,13 @@ function Edit({ id }) {
    * [REACT.DEV] Avoid: Adjusting state on prop change in an Effect
    */
   // useEffect(effect function, dependencies);
-  useEffect(() => {
-    // Synchronous side effect
-    console.log("  useEffect(() => {})");
-    const task = getTaskById(id);
-    // task && setTaskToEdit(task); // Passing reference, disregards immutability
-    task && setTaskToEdit({ ...task }); // Regards immutability
-  }, [id]); // With relavent dependencies in array [Selective execution]
+  // useEffect(() => {
+  //   // Synchronous side effect
+  //   console.log("  useEffect(() => {})");
+  //   const task = getTaskById(id);
+  //   // task && setTaskToEdit(task); // Passing reference, disregards immutability
+  //   task && setTaskToEdit({ ...task }); // Regards immutability
+  // }, [id]); // With relavent dependencies in array [Selective execution]
   // }, [id, getTaskById]); // With all dependencies in array [Selective execution: Here, infinite loop of rendering]
   // }, []); // With empty dependency array [Single execution]
   // // }); // Without dependency array [Infinite loop of rendering]

@@ -8,7 +8,12 @@ function Update() {
   return (
     <div>
       <PendingTasks headingContainer="h1"></PendingTasks>
-      <Edit id={+params.taskId} />
+
+      {/* [BETTER SOLUTION with key prop]*/}
+      {/* - Resetting all state by passing params.taskId as a key attribute to the Edit component */}
+      {/* - All Edit components with different key attribute are different components and they will not share any state. */}
+      {/* ---- [SOLUTION-PROBLEM-REMOUNT] -------------- */}
+      <Edit key={params.taskId} id={+params.taskId} />
     </div>
   );
 }
