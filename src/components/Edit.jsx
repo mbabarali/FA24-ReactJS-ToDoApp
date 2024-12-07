@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 // import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
 
@@ -121,6 +122,26 @@ function Edit({ id }) {
       <button type="submit" className="editSubmitButton">
         Update
       </button>
+
+      <div className="btnContainter">
+        <Link
+          to={".."}
+          className="editBackLink"
+          relative="path"
+          // relative="route" // [Default]
+        >
+          Back
+        </Link>
+
+        <Link
+          to={".."}
+          className="editHomeLink"
+          // relative="path"
+          relative="route" // [Default]
+        >
+          Home
+        </Link>
+      </div>
     </form>
   );
 
