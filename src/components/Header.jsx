@@ -12,7 +12,7 @@ function Header() {
             className={(linkStatus) =>
               linkStatus.isActive ? "active" : undefined
             }
-            // end
+            end
           >
             Home
           </NavLink>

@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 
-function Error({ source }) {
+function ErrorView({ source }) {
   return (
     <>
       <Header></Header>
@@ -9,4 +9,4 @@ function Error({ source }) {
   );
 }
 
-export default Error;
+export default ErrorView;

@@ -14,7 +14,7 @@ import TaskListContext from "../store/taskList-context";
 const PendingTasks = forwardRef(function (props, ref) {
   // --- Uncomment to observe error handling ---
   // if (true) {
-  //   throw new Error("An error found."); /// Manually inform about Error.
+  //   throw new Error("An error found."); // Programmatically inform about Error.
   // }
 
   const purgeProgressingTasks = useRef();

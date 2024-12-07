@@ -19,7 +19,7 @@ import New from "./pages/New";
 import Scheduled from "./pages/Scheduled";
 import Finished from "./pages/Finished";
 import Trash from "./pages/Trash";
-import Error from "./pages/Error";
+import ErrorView from "./pages/ErrorView";
 import Update from "./pages/Update";
 
 // ========================================
@@ -29,20 +29,22 @@ import Update from "./pages/Update";
 // Defining Routes - Option 1
 const routes_op1 = [
   {
-    path: "/",
+    index: true,
+    // path: "/",
     element: <SignIn></SignIn>,
-    errorElement: <Error source="ROOT"></Error>,
+    errorElement: <ErrorView source="ROOT"></ErrorView>,
   },
   {
     path: "/user",
     element: <UserLayout />,
-    errorElement: <Error source="USER"></Error>,
+    errorElement: <ErrorView source="USER"></ErrorView>,
     children: [
       // Relative Paths (without starting /)
       {
-        path: "",
+        index: true,
+        // path: "",
         element: <Home></Home>,
-        errorElement: <Error source="USER/HOME"></Error>,
+        errorElement: <ErrorView source="USER/HOME"></ErrorView>,
       },
       {
         path: "new-task",
@@ -51,7 +53,7 @@ const routes_op1 = [
       {
         path: "scheduled-tasks",
         element: <Scheduled></Scheduled>,
-        errorElement: <Error source="USER/SCHEDULED-TASKS"></Error>,
+        errorElement: <ErrorView source="USER/SCHEDULED-TASKS"></ErrorView>,
       },
       {
         path: "finished-tasks",
@@ -70,11 +72,12 @@ const routes_op1 = [
   {
     path: "/admin",
     element: <AdminLayout></AdminLayout>,
-    errorElement: <Error source="ADMIN"></Error>,
+    errorElement: <ErrorView source="ADMIN"></ErrorView>,
     children: [
       // Relative Paths (without starting /)
       {
-        path: "",
+        index: true,
+        // path: "",
         element: <AdminHome></AdminHome>,
       },
       {
@@ -89,25 +92,27 @@ const routes_op1 = [
 // const routes_op2 = createRoutesFromElements(
 //   <Route>
 //     <Route
-//       path="/"
+//       // path="/"
+//       index
 //       element={<SignIn></SignIn>}
-//       errorElement={<Error source="ROOT" />}
+//       errorElement={<ErrorView source="ROOT" />}
 //     ></Route>
 //     <Route
 //       path="user"
 //       element={<UserLayout></UserLayout>}
-//       errorElement={<Error source="USER" />}
+//       errorElement={<ErrorView source="USER" />}
 //     >
 //       <Route
-//         path=""
+//         // path=""
+//         index
 //         element={<Home></Home>}
-//         errorElement={<Error source="HOME" />}
+//         errorElement={<ErrorView source="HOME" />}
 //       ></Route>
 //       <Route path="new-task" element={<New></New>}></Route>
 //       <Route
 //         path="scheduled-tasks"
 //         element={<Scheduled></Scheduled>}
-//         errorElement={<Error source="SCHEDULED-TASKS" />}
+//         errorElement={<ErrorView source="SCHEDULED-TASKS" />}
 //       ></Route>
 //       <Route path="finished-tasks" element={<Finished></Finished>}></Route>
 //       <Route path="deleted-tasks" element={<Trash></Trash>}></Route>
@@ -116,9 +121,9 @@ const routes_op1 = [
 //     <Route
 //       path="/admin"
 //       element={<AdminLayout></AdminLayout>}
-//       errorElement={<Error source="ADMIN" />}
+//       errorElement={<ErrorView source="ADMIN" />}
 //     >
-//       <Route path="" element={<AdminHome></AdminHome>}></Route>
+//       <Route path="" index element={<AdminHome></AdminHome>}></Route>
 //       <Route path="new-task" element={<AdminNew></AdminNew>}></Route>
 //     </Route>
 //   </Route>

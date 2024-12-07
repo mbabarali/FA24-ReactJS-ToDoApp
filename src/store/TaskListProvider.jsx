@@ -139,7 +139,7 @@ function TaskListProvider({ children }) {
   function handleRestore(id) {
     dispatchTaskList({ type: "RESTORE", payload: { id } });
     console.log(
-      "In Handler [Restore-Scheduled] ==> Task " + id + " --> trash "
+      "In Handler [Restore-Scheduled] ==> Task " + id + " --> restore "
     );
   }
 
@@ -153,7 +153,6 @@ function TaskListProvider({ children }) {
   };
 
   return (
-    //++
     <TaskListContext.Provider value={contextValue}>
       {children}
     </TaskListContext.Provider>
