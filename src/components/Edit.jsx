@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useEffect } from "react";
 import TaskListContext from "../store/taskList-context";
 
 // Functional Component
@@ -15,9 +16,35 @@ function Edit({ id }) {
 
   // ---- [PROBLEM-ILR]: Infinite loop of rendering (ILR) ----
   // ---------------------------------------------------------
-  const task = getTaskById(id);
-  // task && setTaskToEdit(task); // Passing reference, disregards immutability
-  task && setTaskToEdit({ ...task }); // Regards immutability
+  // const task = getTaskById(id);
+  // // task && setTaskToEdit(task); // Passing reference, disregards immutability
+  // task && setTaskToEdit({ ...task }); // Regards immutability
+
+  // [(Not a) SOLUTION with useEffect for synchronous code]
+  // ---- [SOLUTION-PROBLEM-ILR] ------------------------------
+  //     *  Conditional rendering mechanism
+  //     *  useEffect Hook
+  // ---------------------------------------------------------
+  /**
+   * NOTE:
+   * The use of "useEffect" with synchronous code is not actually recommeded!
+   *
+   * [REACT.DEV] You don’t need Effects to transform data for rendering.
+   * [REACT.DEV] Avoid resetting state on prop change in an Effect
+   * [REACT.DEV] Avoid: Adjusting state on prop change in an Effect
+   */
+  // useEffect(effect function, dependencies);
+
+  useEffect(() => {
+    // Synchronous side effect
+    console.log("  useEffect(() => {})");
+    const task = getTaskById(id);
+    // task && setTaskToEdit(task); // Passing reference, disregards immutability
+    task && setTaskToEdit({ ...task }); // Regards immutability
+  }, []); // With empty dependency array [Single execution]
+  // }); // Without dependency array [Infinite loop of rendering]
+
+  console.log("function Edit({ id })");
 
   const renderJsx = (
     <>
@@ -29,9 +56,9 @@ function Edit({ id }) {
       </div>
 
       <div>
-        <strong style={{ color: "blue" }}>[Local Variable] </strong>
+        {/* <strong style={{ color: "blue" }}>[Local Variable] </strong> */}
         {/* {task ? Object.values(task) : undefined} */}
-        {task ? JSON.stringify(task) : undefined}
+        {/* {task ? JSON.stringify(task) : undefined} */}
       </div>
     </>
   );
