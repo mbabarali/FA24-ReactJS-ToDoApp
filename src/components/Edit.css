@@ -1,0 +1,54 @@
+.editContainer {
+  border-bottom: 3px solid black;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  margin: 0 auto;
+  max-width: max-content;
+  background-color: rgb(203, 222, 238);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.editItem {
+  margin: 0.5rem 10rem;
+}
+
+.editSubmitButton {
+  width: 70%;
+  height: 3rem;
+  margin: 1rem auto;
+  background-color: aquamarine;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.btnContainter {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editHomeLink,
+.editBackLink {
+  margin-top: 1rem;
+  width: 20%;
+  height: 1.5rem;
+  text-decoration: none;
+  text-align: center;
+  color: white;
+  border: 1px solid gray;
+  font-size: 1rem;
+  background-color: red;
+  border-radius: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.editBackLink {
+  background-color: goldenrod;
+}

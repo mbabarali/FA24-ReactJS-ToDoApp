@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 // import { useEffect } from "react";
 import TaskListContext from "../store/taskList-context";
+import "./Edit.css";
 
 // Functional Component
 function Edit({ id }) {
@@ -55,9 +56,69 @@ function Edit({ id }) {
 
   console.log("function Edit({ id })");
 
+  const taskEditForm = (
+    <form className="editForm">
+      <label className="editItem">
+        id:
+        <span>{taskToEdit.id}</span>
+      </label>
+
+      <label className="editItem">
+        Date:
+        <span>{taskToEdit.createDate}</span>
+      </label>
+
+      <label className="editItem">
+        Task:
+        <input
+          type="text"
+          // defaultValue={taskToEdit.title}
+          value={taskToEdit.title}
+        />
+      </label>
+
+      <label className="editItem">
+        Completed:
+        <select defaultValue={taskToEdit.done ? "1" : "0"}>
+          <option
+            value="1" // selected={taskToEdit.done && "selected"}
+          >
+            true
+          </option>
+          <option
+            value="0" // selected={!taskToEdit.done || "selected"}
+          >
+            false
+          </option>
+        </select>
+      </label>
+
+      <label className="editItem">
+        Trashed:
+        <select defaultValue={taskToEdit.trash ? "1" : "0"}>
+          <option
+            value="1" // selected={taskToEdit.trash && "selected"}
+          >
+            true
+          </option>
+          <option
+            value="0" // selected={!taskToEdit.trash || "selected"}
+          >
+            false
+          </option>
+        </select>
+      </label>
+
+      <button type="submit" className="editSubmitButton">
+        Update
+      </button>
+    </form>
+  );
+
   const renderJsx = (
-    <>
+    <div className="editContainer">
       <h1>Edit Task {id}</h1>
+      {taskEditForm}
 
       <div>
         <strong style={{ color: "green" }}>[State] </strong>
@@ -69,7 +130,7 @@ function Edit({ id }) {
         {/* {task ? Object.values(task) : undefined} */}
         {task ? JSON.stringify(task) : undefined}
       </div>
-    </>
+    </div>
   );
 
   return renderJsx;
