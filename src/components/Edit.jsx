@@ -1,8 +1,67 @@
 import { useContext, useState } from "react";
+import { useReducer } from "react";
 // import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
+
+function taskToEditReducer(currentState, action) {
+  const { type, payload } = action;
+
+  console.log(action);
+  switch (type) {
+    case "TASK": {
+      // ******** Approach 01 ********
+      // // [STEP-1] Create copy // Shallow copy
+      // const copyState = { ...currentState };
+      // // [STEP-2] Update desired value(s) in copy
+      // copyState.createDate = payload.createDate;
+      // copyState.title = payload.title;
+      // copyState.done = payload.done;
+      // copyState.trash = payload.trash;
+      // // [STEP-3] Return updated copy
+      // return copyState;
+
+      // ******** Approach 02 ********
+      // return {
+      //   // [STEP-1] Create copy // Shallow copy
+      //   ...currentState,
+      //   // [STEP-2] Update desired value(s) in copy
+      //   id: payload.id,
+      //   createDate: payload.createDate,
+      //   title: payload.title,
+      //   done: payload.done,
+      //   trash: payload.trash,
+      // }; // [STEP-3] Return updated copy
+
+      // ******** Approach 03 ********
+      return {
+        // [STEP-1] Create copy // Shallow copy
+        ...currentState,
+        // [STEP-2] Update desired value(s) in copy
+        ...action.payload,
+      }; // [STEP-3] Return updated copy
+    }
+    // break;
+    case "PROPERTY":
+      // ******** Approach 02 ********
+      return {
+        ...currentState, // [STEP-1] Create copy // Shallow copy
+        [payload.propertyName]: payload.propertyValue, // [STEP-2] Update desired value(s) in copy
+      };
+    // break;
+    default:
+      // return {
+      //   ...currentState, // [STEP-1] Create copy // Shallow copy
+      //   // No change (Retrun copy as it is!). // [STEP-2] Update desired value(s) in copy
+      // }; // [STEP-3] Return updated copy
+
+      return currentState; // No change (Retrun copy as it is!)
+    // break;
+  }
+
+  // return currentState; // No change (Retrun copy as it is!)
+}
 
 // Functional Component
 function Edit({ id }) {
@@ -17,7 +76,8 @@ function Edit({ id }) {
   // ---------------------------------------------------------
   const task = getTaskById(id);
   // Passing reference, disregards immutability
-  const [taskToEdit, setTaskToEdit] = useState(task); // Now we can call setTaskToEdit function in asynchronous code such as event handlers without creating infinite renders
+  // const [taskToEdit, setTaskToEdit] = useState(task); // Now we can call setTaskToEdit function in asynchronous code such as event handlers without creating infinite renders
+  const [taskToEdit, dispatchTaskToEdit] = useReducer(taskToEditReducer, task); // Now we can call dispatchTaskToEdit function in asynchronous code such as event handlers without creating infinite renders
 
   /**
    * [PROBLEM-REMOUNT] On Clicking various "edit" buttons on 'baseURL/user/schedueld-tasks/:taskId' page (Update page):
@@ -35,8 +95,13 @@ function Edit({ id }) {
   // ---- [PROBLEM-ILR]: Infinite loop of rendering (ILR) ----
   // ---------------------------------------------------------
   // const task = getTaskById(id);
-  // // task && setTaskToEdit(task); // Passing reference, disregards immutability
-  // task && setTaskToEdit({ ...task }); // Regards immutability
+  // // // task && setTaskToEdit(task); // Passing reference, disregards immutability
+  // // task && setTaskToEdit({ ...task }); // Regards immutability
+  // task &&
+  //   dispatchTaskToEdit({
+  //     type: "TASK",
+  //     payload: task,
+  //   });
 
   // [BAD SOLUTIONS with useEffect for synchronous code]
   // ---- [SOLUTION-PROBLEM-REMOUNT] --------------------------
@@ -57,8 +122,13 @@ function Edit({ id }) {
   //   // Synchronous side effect
   //   console.log("  useEffect(() => {})");
   //   const task = getTaskById(id);
-  //   // task && setTaskToEdit(task); // Passing reference, disregards immutability
-  //   task && setTaskToEdit({ ...task }); // Regards immutability
+  //   // // task && setTaskToEdit(task); // Passing reference, disregards immutability
+  //   // task && setTaskToEdit({ ...task }); // Regards immutability
+  //   task &&
+  //     dispatchTaskToEdit({
+  //       type: "TASK",
+  //       payload: task,
+  //     });
   // }, [id]); // With relavent dependencies in array [Selective execution]
   // }, [id, getTaskById]); // With all dependencies in array [Selective execution: Here, infinite loop of rendering]
   // }, []); // With empty dependency array [Single execution]
@@ -66,6 +136,36 @@ function Edit({ id }) {
 
   console.log("function Edit({ id })");
 
+  // Controlled form/rendering
+  function onValueChange(propertyOfTask, event) {
+    switch (propertyOfTask) {
+      case "createDate":
+      case "title":
+        dispatchTaskToEdit({
+          type: "PROPERTY",
+          payload: {
+            propertyName: propertyOfTask,
+            propertyValue: event.target.value,
+          },
+        });
+        break;
+      case "done":
+      case "trash":
+        dispatchTaskToEdit({
+          type: "PROPERTY",
+          payload: {
+            propertyName: propertyOfTask,
+            propertyValue: event.target.value === "1",
+          },
+        });
+        break;
+      default:
+        console.log("Unexpected Value");
+        return;
+    }
+  }
+
+  // [SOLUTION-PROBLEM-PROPS] It uses existing state/s.
   const taskEditForm = (
     <form className="editForm">
       <label className="editItem">
@@ -75,13 +175,18 @@ function Edit({ id }) {
 
       <label className="editItem">
         Date:
-        <span>{taskToEdit.createDate}</span>
+        <input
+          type="text"
+          onChange={(event) => onValueChange("createDate", event)}
+          value={taskToEdit.createDate}
+        />
       </label>
 
       <label className="editItem">
         Task:
         <input
           type="text"
+          onChange={(event) => onValueChange("title", event)}
           // defaultValue={taskToEdit.title}
           value={taskToEdit.title}
         />
@@ -89,7 +194,10 @@ function Edit({ id }) {
 
       <label className="editItem">
         Completed:
-        <select defaultValue={taskToEdit.done ? "1" : "0"}>
+        <select
+          onChange={(event) => onValueChange("done", event)}
+          defaultValue={taskToEdit.done ? "1" : "0"}
+        >
           <option
             value="1" // selected={taskToEdit.done && "selected"}
           >
@@ -105,7 +213,10 @@ function Edit({ id }) {
 
       <label className="editItem">
         Trashed:
-        <select defaultValue={taskToEdit.trash ? "1" : "0"}>
+        <select
+          onChange={(event) => onValueChange("trash", event)}
+          defaultValue={taskToEdit.trash ? "1" : "0"}
+        >
           <option
             value="1" // selected={taskToEdit.trash && "selected"}
           >
