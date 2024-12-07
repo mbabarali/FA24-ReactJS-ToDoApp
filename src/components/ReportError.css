@@ -1,0 +1,10 @@
+.error-container {
+  display: flex;
+  justify-content: end;
+  margin: 1rem auto;
+}
+
+.error-btn {
+  padding: 1rem;
+  color: red;
+}

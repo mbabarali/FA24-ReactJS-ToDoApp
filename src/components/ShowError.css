@@ -1,0 +1,27 @@
+.error-report {
+  font-size: 1.2rem;
+  display: block;
+  width: 70%;
+  margin: 5rem auto;
+  text-align: center;
+}
+
+.warning-logo {
+  color: yellow;
+  font-size: 1.5rem;
+}
+
+.source-container,
+.status-container,
+.message-container {
+  background-color: rgb(98, 6, 6);
+}
+
+.error-source {
+  color: rgb(231, 6, 6);
+}
+
+.error-status,
+.error-message {
+  color: rgb(219, 199, 199);
+}
