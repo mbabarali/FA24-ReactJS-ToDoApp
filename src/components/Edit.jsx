@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
 
@@ -15,7 +15,7 @@ function Edit({ id }) {
   //     *  useEffect Hook
   // ---------------------------------------------------------
   const task = getTaskById(id);
-  // Passing reference, disregards mutability
+  // Passing reference, disregards immutability
   const [taskToEdit, setTaskToEdit] = useState(task); // Now we can call setTaskToEdit function in asynchronous code such as event handlers without creating infinite renders
 
   /**
@@ -37,7 +37,8 @@ function Edit({ id }) {
   // // task && setTaskToEdit(task); // Passing reference, disregards immutability
   // task && setTaskToEdit({ ...task }); // Regards immutability
 
-  // [BAD SOLUTION with useEffect for synchronous code]
+  // [BAD SOLUTIONS with useEffect for synchronous code]
+  // ---- [SOLUTION-PROBLEM-REMOUNT] --------------------------
   // ---- [SOLUTION-PROBLEM-ILR] ------------------------------
   //     *  Conditional rendering mechanism
   //     *  useEffect Hook
@@ -50,13 +51,15 @@ function Edit({ id }) {
    * [REACT.DEV] Avoid resetting state on prop change in an Effect
    * [REACT.DEV] Avoid: Adjusting state on prop change in an Effect
    */
-  // // useEffect(effect function, dependencies);
-  // useEffect(() => {
-  //   // Synchronous side effect
-  //   console.log("  useEffect(() => {})");
-  //   const task = getTaskById(id);
-  //   // task && setTaskToEdit(task); // Passing reference, disregards mutability
-  //   task && setTaskToEdit({ ...task }); // Regards mutability
+  // useEffect(effect function, dependencies);
+  useEffect(() => {
+    // Synchronous side effect
+    console.log("  useEffect(() => {})");
+    const task = getTaskById(id);
+    // task && setTaskToEdit(task); // Passing reference, disregards immutability
+    task && setTaskToEdit({ ...task }); // Regards immutability
+  }, [id]); // With relavent dependencies in array [Selective execution]
+  // }, [id, getTaskById]); // With all dependencies in array [Selective execution: Here, infinite loop of rendering]
   // }, []); // With empty dependency array [Single execution]
   // // }); // Without dependency array [Infinite loop of rendering]
 
