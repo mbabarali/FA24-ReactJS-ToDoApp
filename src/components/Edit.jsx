@@ -67,6 +67,8 @@ function taskToEditReducer(currentState, action) {
 function Edit({ id }) {
   const ctx = useContext(TaskListContext);
 
+  const [IsDateEdit, setIsDateEdit] = useState(false);
+
   // [BETTER SOLUTION with Conditional rendering mechanism]
   //  - Conditional rendering with state for synchronous code
   //  - Synchronous side effect (useState or useReducer)
@@ -136,6 +138,10 @@ function Edit({ id }) {
 
   console.log("function Edit({ id })");
 
+  function editDate() {
+    setIsDateEdit((currentState) => (currentState = !currentState));
+  }
+
   // Controlled form/rendering
   function onValueChange(propertyOfTask, event) {
     switch (propertyOfTask) {
@@ -165,6 +171,12 @@ function Edit({ id }) {
     }
   }
 
+  // const taskDate = new Date(
+  //   taskToEdit.createDate.replace(/(\d{2})\.(\d{2})\.(\d{4})/, "$3-$2-$1")
+  // )
+  //   .toISOString()
+  //   .substring(0, 10); // "20.10.2023" ==> "2023-10-20"
+
   // [SOLUTION-PROBLEM-PROPS] It uses existing state/s.
   const taskEditForm = (
     <form className="editForm">
@@ -176,10 +188,56 @@ function Edit({ id }) {
       <label className="editItem">
         Date:
         <input
-          type="text"
+          onFocus={editDate}
+          onBlur={editDate}
           onChange={(event) => onValueChange("createDate", event)}
-          value={taskToEdit.createDate}
+          type={IsDateEdit ? "date" : "text"}
+          // defaultValue={taskDate}
+          // value={taskDate}
+          value={
+            (() =>
+              new Date(
+                taskToEdit.createDate.replace(
+                  /(\d{2})\.(\d{2})\.(\d{4})/,
+                  "$3-$2-$1"
+                )
+              )
+                .toISOString()
+                .substring(0, 10))() // "20.10.2023" ==> "2023-10-20"
+          }
         />
+        {/*         
+        {IsDateEdit ? (
+          <input
+            onFocus={editDate}
+            onBlur={editDate}
+            onChange={(event) => onValueChange("createDate", event)}
+            type="date"
+            // defaultValue={taskDate}
+            // value={taskDate}
+            value={(() => {
+              console.log("- IIFE for date -");
+
+              return new Date(
+                taskToEdit.createDate.replace(
+                  /(\d{2})\.(\d{2})\.(\d{4})/,
+                  "$3-$2-$1"
+                )
+              )
+                .toISOString()
+                .substring(0, 10); // "20.10.2023" ==> "2023-10-20"
+            })()}
+          />
+        ) : (
+          <input
+            type="text"
+            onFocus={editDate}
+            onBlur={editDate}
+            onChange={(event) => onValueChange("createDate", event)}
+            value={taskToEdit.createDate}
+          />
+        )}
+        */}
       </label>
 
       <label className="editItem">
