@@ -18,6 +18,12 @@ function Edit({ id }) {
   // Passing reference, disregards mutability
   const [taskToEdit, setTaskToEdit] = useState(task); // Now we can call setTaskToEdit function in asynchronous code such as event handlers without creating infinite renders
 
+  /**
+   * [PROBLEM-REMOUNT] On Clicking various "edit" buttons on 'baseURL/user/schedueld-tasks/:taskId' page (Update page):
+   * [PROBLEM-REMOUNT]  - State will not destroy/recreate due to no change in placement of Edit, eventually same DOM tree.
+   * [PROBLEM-REMOUNT]  - State will be kept due to no change in placement of Edit, eventually same DOM tree.
+   */
+
   function getTaskById(id) {
     let foundElements = ctx.taskList.filter((obj) => {
       return id === obj.id;
