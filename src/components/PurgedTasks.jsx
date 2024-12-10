@@ -19,6 +19,10 @@ function PurgedTasks({ HeadingContainer }) {
 
   // console.log("deletedTasks ---> ", deletedTasks);
 
+  const onRestore = (id) => {
+    ctx.dispatchTaskList({ type: "RESTORE", payload: { id } });
+  };
+
   const list = deletedTasks.map((task, ind) => {
     // Mandatory unique key for each item in the React list [must not be array index]
     return (
@@ -26,7 +30,8 @@ function PurgedTasks({ HeadingContainer }) {
         key={task.id}
         title={task.title}
         id={task.id}
-        onRestore={ctx.onRestore}
+        // onRestore={ctx.onRestore}
+        onRestore={onRestore}
       />
     );
   });

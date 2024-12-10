@@ -29,7 +29,16 @@ const PendingTasks = forwardRef(function (props, ref) {
     };
   });
 
-  const { taskList, onDone, onDelete } = ctx;
+  // const { taskList, onDone, onDelete } = ctx;
+  const { taskList, dispatchTaskList } = ctx;
+
+  const onDone = (id) => {
+    dispatchTaskList({ type: "DONE", payload: { id } });
+  };
+
+  const onDelete = (id) => {
+    dispatchTaskList({ type: "DELETE", payload: { id } });
+  };
 
   const pendingTasks = taskList.filter(function (task) {
     return task.done === false && task.trash === false;

@@ -112,12 +112,23 @@ const reducerTaskList = (latestState, action) => {
   }
 };
 
+/** ******************************************************
+ *
+ *       Context Module Functions
+ *       Context Module Pattern
+ *
+ ****************************************************** */
+
+// ----------------- TaskListProvider -----------------
 function TaskListProvider({ children }) {
   const [taskList, dispatchTaskList] = useReducer(
     reducerTaskList,
     INITIAL_TASKS
   );
 
+  /*
+  // ----------------- Helper Functions -----------------
+  // --------- Later to be moved to helpers.jsx ---------
   function handleDone(id) {
     dispatchTaskList({ type: "DONE", payload: { id } });
     console.log("In Handler [Done-Scheduled] ==> Task " + id + " --> done ");
@@ -142,14 +153,16 @@ function TaskListProvider({ children }) {
       "In Handler [Restore-Scheduled] ==> Task " + id + " --> restore "
     );
   }
+  */
 
   // ----------------- Context Provider -----------------
   const contextValue = {
     taskList: taskList,
-    onAdd: handleAdd,
-    onDone: handleDone,
-    onDelete: handleDelete,
-    onRestore: handleRestore,
+    dispatchTaskList: dispatchTaskList,
+    // onAdd: handleAdd,
+    // onDone: handleDone,
+    // onDelete: handleDelete,
+    // onRestore: handleRestore,
   };
 
   return (

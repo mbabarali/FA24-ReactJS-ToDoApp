@@ -17,7 +17,8 @@ function AddTask() {
     - MUST be called at the top of the components before any other nested block.
   */
 
-  const { onAdd } = useContext(TaskListContext);
+  // const { onAdd } = useContext(TaskListContext);
+  const { dispatchTaskList } = useContext(TaskListContext);
 
   // Following line returns reference to the new variable when the component (AddTask)
   // is rendered for the first time. On every re-rendering of the component (AddTask),
@@ -42,7 +43,14 @@ function AddTask() {
 
   // Arrow Function (An anonymous function)
   const handleAdd = () => {
-    onAdd(taskTitle.current.value);
+    // onAdd(taskTitle.current.value);
+    if (taskTitle.current.value) {
+      dispatchTaskList({
+        type: "ADD",
+        payload: { newTitle: taskTitle.current.value },
+      });
+      console.log("In Handler [Add-Scheduled] ==> Task --> Added ");
+    }
 
     /* Updating state variable obtained from the react hook */
     setAdd(true);

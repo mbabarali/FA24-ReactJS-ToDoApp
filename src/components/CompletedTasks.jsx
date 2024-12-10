@@ -18,6 +18,10 @@ function CompletedTasks({ HeadingContainer }) {
 
   // console.log("completedTasks ---> ", completedTasks);
 
+  const onDelete = (id) => {
+    ctx.dispatchTaskList({ type: "DELETE", payload: { id } });
+  };
+
   const list = completedTasks.map((task, ind) => {
     return (
       <TaskCompleted
@@ -25,7 +29,8 @@ function CompletedTasks({ HeadingContainer }) {
         key={task.id}
         title={task.title}
         id={task.id}
-        onDelete={ctx.onDelete}
+        // onDelete={ctx.onDelete}
+        onDelete={onDelete}
       />
     );
 
