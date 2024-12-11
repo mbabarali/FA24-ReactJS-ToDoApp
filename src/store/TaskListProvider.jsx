@@ -1,7 +1,8 @@
 import { useReducer } from "react";
+import { createContext, useContext } from "react";
 
 import { INITIAL_TASKS } from "../data/initialTasks";
-import TaskListContext from "./taskList-context";
+// import TaskListContext from "./taskList-context";
 
 // ----------------- State Reducer --------------------
 // Reducer function must be defined outside the component
@@ -118,6 +119,49 @@ const reducerTaskList = (latestState, action) => {
  *       Context Module Pattern
  *
  ****************************************************** */
+
+// ---------------- Create Context---------------------
+//Upper case (e.g. TaskListContext) to be defined as component
+const TaskListContext = createContext({
+  taskList: [],
+  dispatchTaskList: () => {},
+  // onDone: () => {},
+  // onDelete: () => {},
+  // onRestore: () => {},
+  // onAdd: () => {},
+});
+
+TaskListContext.displayName = "TaskListContext"; // [OPTIONAL] Debugging Purpose only
+
+// export default TaskListContext;
+
+// ----------------- Custom Hooks ---------------------
+// Custom Hook
+export function useTasksState() {
+  const context = useContext(TaskListContext);
+
+  if (context === undefined) {
+    throw new Error(`useTaskState must be used within a TaskListProvider`);
+  }
+
+  return context.taskList;
+}
+
+// Custom Hook
+export function useTasksDispatch() {
+  const context = useContext(TaskListContext);
+
+  if (context === undefined) {
+    throw new Error(`useTaskState must be used within a TaskListProvider`);
+  }
+
+  return context.dispatchTaskList;
+}
+
+// Custom Hook
+export function useTasks() {
+  return [useTasksState(), useTasksDispatch()];
+}
 
 // ----------------- TaskListProvider -----------------
 function TaskListProvider({ children }) {

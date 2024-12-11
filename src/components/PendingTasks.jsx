@@ -4,9 +4,9 @@ import { useState } from "react";
 import { forwardRef } from "react";
 import { useImperativeHandle } from "react";
 import { useRef } from "react";
-import { useContext } from "react";
-
-import TaskListContext from "../store/taskList-context";
+// import { useContext } from "react";
+// import TaskListContext from "../store/taskList-context";
+import { useTasksDispatch, useTasksState } from "../store/TaskListProvider";
 
 // const PendingTasks = forwardRef(function (props, ref) {});
 
@@ -19,7 +19,9 @@ const PendingTasks = forwardRef(function (props, ref) {
 
   const purgeProgressingTasks = useRef();
 
-  const ctx = useContext(TaskListContext);
+  // const ctx = useContext(TaskListContext);
+  const taskList = useTasksState();
+  const dispatchTaskList = useTasksDispatch();
 
   useImperativeHandle(ref, () => {
     return {
@@ -30,7 +32,7 @@ const PendingTasks = forwardRef(function (props, ref) {
   });
 
   // const { taskList, onDone, onDelete } = ctx;
-  const { taskList, dispatchTaskList } = ctx;
+  // const { taskList, dispatchTaskList } = ctx;
 
   const onDone = (id) => {
     dispatchTaskList({ type: "DONE", payload: { id } });

@@ -1,9 +1,11 @@
-import { useContext, useState } from "react";
+// import { useContext, useState } from "react";
+import { useState } from "react";
 import { useReducer } from "react";
 // import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import TaskListContext from "../store/taskList-context";
+// import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
+import { useTasksState } from "../store/TaskListProvider";
 
 function taskToEditReducer(currentState, action) {
   const { type, payload } = action;
@@ -65,7 +67,8 @@ function taskToEditReducer(currentState, action) {
 
 // Functional Component
 function Edit({ id }) {
-  const ctx = useContext(TaskListContext);
+  // const ctx = useContext(TaskListContext);
+  const taskList = useTasksState();
 
   const [IsDateEdit, setIsDateEdit] = useState(false);
 
@@ -88,7 +91,8 @@ function Edit({ id }) {
    */
 
   function getTaskById(id) {
-    let foundElements = ctx.taskList.filter((obj) => {
+    // let foundElements = ctx.taskList.filter((obj) => {
+    let foundElements = taskList.filter((obj) => {
       return id === obj.id;
     });
     return foundElements.length !== 1 ? undefined : foundElements[0];
@@ -216,7 +220,7 @@ function Edit({ id }) {
             // defaultValue={taskDate}
             // value={taskDate}
             value={(() => {
-              console.log("- IIFE for date -");
+              console.log("----------------------------------");
 
               return new Date(
                 taskToEdit.createDate.replace(

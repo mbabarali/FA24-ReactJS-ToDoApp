@@ -4,9 +4,9 @@ import Wrapper from "./Wrapper";
 
 import { useState } from "react"; //React Hook
 import { useRef } from "react"; //React Hook
-import { useContext } from "react"; //React Hook
-
-import TaskListContext from "../store/taskList-context";
+// import { useContext } from "react"; //React Hook
+// import TaskListContext from "../store/taskList-context";
+import { useTasksDispatch } from "../store/TaskListProvider";
 
 // function AddTask({ onAdd }) {
 function AddTask() {
@@ -18,7 +18,8 @@ function AddTask() {
   */
 
   // const { onAdd } = useContext(TaskListContext);
-  const { dispatchTaskList } = useContext(TaskListContext);
+  // const { dispatchTaskList } = useContext(TaskListContext);
+  const dispatchTaskList = useTasksDispatch();
 
   // Following line returns reference to the new variable when the component (AddTask)
   // is rendered for the first time. On every re-rendering of the component (AddTask),

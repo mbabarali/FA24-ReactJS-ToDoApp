@@ -1,8 +1,8 @@
 import TaskCompleted from "./TaskCompleted";
 // import ShowMessage from "./ShowMessage";
-
-import TaskListContext from "../store/taskList-context";
-import { useContext } from "react";
+// import TaskListContext from "../store/taskList-context";
+// import { useContext } from "react";
+import { useTasksDispatch, useTasksState } from "../store/TaskListProvider";
 
 import "./CompletedTasks.css";
 
@@ -10,16 +10,20 @@ import "./CompletedTasks.css";
 // To enable destructurin in function arguments for a dynamic component placeholder, its name must start with capital letter to stay consistent with component naming convention in React (e.g. PascalCase notation), such as 'HeadingContainer'
 // function CompletedTasks({ tasks, onDelete, HeadingContainer }) {
 function CompletedTasks({ HeadingContainer }) {
-  const ctx = useContext(TaskListContext);
+  // const ctx = useContext(TaskListContext);
+  const taskList = useTasksState();
+  const dispatchTaskList = useTasksDispatch();
 
-  const completedTasks = ctx.taskList.filter(
+  // const completedTasks = ctx.taskList.filter(
+  const completedTasks = taskList.filter(
     (task) => task.done === true && task.trash === false
   );
 
   // console.log("completedTasks ---> ", completedTasks);
 
   const onDelete = (id) => {
-    ctx.dispatchTaskList({ type: "DELETE", payload: { id } });
+    // ctx.dispatchTaskList({ type: "DELETE", payload: { id } });
+    dispatchTaskList({ type: "DELETE", payload: { id } });
   };
 
   const list = completedTasks.map((task, ind) => {
