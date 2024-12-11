@@ -1,7 +1,11 @@
+import { useTasksDispatch } from "../store/TaskListProvider";
+
 // Stateless Functional Component
 function TaskCompleted(props) {
   const { id, title } = props;
   const { onDelete } = props;
+
+  const dispatch = useTasksDispatch();
 
   return (
     <div>
@@ -11,7 +15,7 @@ function TaskCompleted(props) {
       <button
         // Legacy Named Function (A named function)
         onClick={function doHandleDelete() {
-          onDelete(id);
+          onDelete(dispatch, id);
         }}
       >
         delete

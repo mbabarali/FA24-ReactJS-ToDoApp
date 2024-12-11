@@ -1,5 +1,6 @@
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useTasksDispatch } from "../store/TaskListProvider";
 
 // Stateless Functional Component
 function TaskPending(props) {
@@ -7,6 +8,7 @@ function TaskPending(props) {
   const { onDone, onDelete, onInProgress } = props;
 
   // const navigate = useNavigate();
+  const dispatch = useTasksDispatch();
 
   return (
     <div className={className}>
@@ -33,7 +35,7 @@ function TaskPending(props) {
         // Legacy Anonymous Function (An anonymous function)
         onClick={function (event) {
           event.stopPropagation();
-          onDone(id);
+          onDone(dispatch, id);
         }}
       >
         done
@@ -44,7 +46,7 @@ function TaskPending(props) {
         // Arrow Function (An anonymous function)
         onClick={(event) => {
           event.stopPropagation();
-          onDelete(id);
+          onDelete(dispatch, id);
         }}
       >
         delete

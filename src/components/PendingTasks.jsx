@@ -6,7 +6,11 @@ import { useImperativeHandle } from "react";
 import { useRef } from "react";
 // import { useContext } from "react";
 // import TaskListContext from "../store/taskList-context";
-import { useTasksDispatch, useTasksState } from "../store/TaskListProvider";
+import { useTasks } from "../store/TaskListProvider";
+// import { useTasksDispatch, useTasksState } from "../store/TaskListProvider";
+
+import { handleDone as onDone } from "../store/helpers";
+import { handleDelete as onDelete } from "../store/helpers";
 
 // const PendingTasks = forwardRef(function (props, ref) {});
 
@@ -20,8 +24,9 @@ const PendingTasks = forwardRef(function (props, ref) {
   const purgeProgressingTasks = useRef();
 
   // const ctx = useContext(TaskListContext);
-  const taskList = useTasksState();
-  const dispatchTaskList = useTasksDispatch();
+  // const taskList = useTasksState();
+  // const dispatchTaskList = useTasksDispatch();
+  const [taskList, dispatchTaskList] = useTasks();
 
   useImperativeHandle(ref, () => {
     return {
@@ -34,13 +39,13 @@ const PendingTasks = forwardRef(function (props, ref) {
   // const { taskList, onDone, onDelete } = ctx;
   // const { taskList, dispatchTaskList } = ctx;
 
-  const onDone = (id) => {
-    dispatchTaskList({ type: "DONE", payload: { id } });
-  };
+  // const onDone = (id) => {
+  //   dispatchTaskList({ type: "DONE", payload: { id } });
+  // };
 
-  const onDelete = (id) => {
-    dispatchTaskList({ type: "DELETE", payload: { id } });
-  };
+  // const onDelete = (id) => {
+  //   dispatchTaskList({ type: "DELETE", payload: { id } });
+  // };
 
   const pendingTasks = taskList.filter(function (task) {
     return task.done === false && task.trash === false;
@@ -77,7 +82,8 @@ const PendingTasks = forwardRef(function (props, ref) {
     console.log("[PendingTasks] Purge tasks ...");
 
     InProgress.forEach((id) => {
-      onDelete(id);
+      onDelete(dispatchTaskList, id);
+      // onDelete(id);
     });
   };
 

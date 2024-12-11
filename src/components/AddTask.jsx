@@ -8,10 +8,12 @@ import { useRef } from "react"; //React Hook
 // import TaskListContext from "../store/taskList-context";
 import { useTasksDispatch } from "../store/TaskListProvider";
 
+import { handleAdd as onAdd } from "../store/helpers";
+
 // function AddTask({ onAdd }) {
 function AddTask() {
   /*
-    React Hooks (Hook fucntions) 
+    React Hooks (Hook functions) 
     - MUST be called within react components.
     - MUST be called within react hook/ custom hook.
     - MUST be called at the top of the components before any other nested block.
@@ -44,14 +46,15 @@ function AddTask() {
 
   // Arrow Function (An anonymous function)
   const handleAdd = () => {
+    onAdd(dispatchTaskList, taskTitle.current.value);
     // onAdd(taskTitle.current.value);
-    if (taskTitle.current.value) {
-      dispatchTaskList({
-        type: "ADD",
-        payload: { newTitle: taskTitle.current.value },
-      });
-      console.log("In Handler [Add-Scheduled] ==> Task --> Added ");
-    }
+    // if (taskTitle.current.value) {
+    //   dispatchTaskList({
+    //     type: "ADD",
+    //     payload: { newTitle: taskTitle.current.value },
+    //   });
+    //   console.log("In Handler [Add-Scheduled] ==> Task --> Added ");
+    // }
 
     /* Updating state variable obtained from the react hook */
     setAdd(true);

@@ -172,7 +172,7 @@ function TaskListProvider({ children }) {
 
   /*
   // ----------------- Helper Functions -----------------
-  // --------- Later to be moved to helpers.jsx ---------
+  // --------------- Moved to helpers.jsx ---------------
   function handleDone(id) {
     dispatchTaskList({ type: "DONE", payload: { id } });
     console.log("In Handler [Done-Scheduled] ==> Task " + id + " --> done ");

@@ -2,8 +2,10 @@ import TaskCompleted from "./TaskCompleted";
 // import ShowMessage from "./ShowMessage";
 // import TaskListContext from "../store/taskList-context";
 // import { useContext } from "react";
-import { useTasksDispatch, useTasksState } from "../store/TaskListProvider";
+import { useTasksState } from "../store/TaskListProvider";
+// import { useTasksDispatch, useTasksState } from "../store/TaskListProvider";
 
+import { handleDelete as onDelete } from "../store/helpers";
 import "./CompletedTasks.css";
 
 // Functional Component
@@ -12,7 +14,7 @@ import "./CompletedTasks.css";
 function CompletedTasks({ HeadingContainer }) {
   // const ctx = useContext(TaskListContext);
   const taskList = useTasksState();
-  const dispatchTaskList = useTasksDispatch();
+  // const dispatchTaskList = useTasksDispatch();
 
   // const completedTasks = ctx.taskList.filter(
   const completedTasks = taskList.filter(
@@ -21,10 +23,10 @@ function CompletedTasks({ HeadingContainer }) {
 
   // console.log("completedTasks ---> ", completedTasks);
 
-  const onDelete = (id) => {
-    // ctx.dispatchTaskList({ type: "DELETE", payload: { id } });
-    dispatchTaskList({ type: "DELETE", payload: { id } });
-  };
+  // const onDelete = (id) => {
+  //   // ctx.dispatchTaskList({ type: "DELETE", payload: { id } });
+  //   dispatchTaskList({ type: "DELETE", payload: { id } });
+  // };
 
   const list = completedTasks.map((task, ind) => {
     return (
