@@ -108,6 +108,40 @@ const reducerTaskList = (latestState, action) => {
       return updatedList; // Do not forget to return updated copy
     }
     // break;
+    case "MODIFY": {
+      console.log("latestState: ", latestState);
+      const taskInd = latestState.findIndex(
+        (task) => task.id === payload.task.id
+      );
+
+      const updatedList = [...latestState]; // [STEP-1] Create copy // Shallow copy
+
+      // updatedList[taskInd] = {
+      //   ...updatedList[taskInd],
+      //   ...payload.task, // May update ID which might be undesireable
+      //   createDate: payload.task.createDate,
+      // }; // [STEP-2] Update desired value(s) in copy
+
+      // updatedList[taskInd].id X=X payload.task.id; // [DONOT MODIFY - DONOT MODIFY - DONOT MODIFY ]
+      updatedList[taskInd].title = payload.task.title; // [STEP-2] Update desired value(s) in copy
+      updatedList[taskInd].createDate = payload.task.createDate; // [STEP-2] Update desired value(s) in copy
+      updatedList[taskInd].done = payload.task.done; // [STEP-2] Update desired value(s) in copy
+      updatedList[taskInd].trash = payload.task.trash; // [STEP-2] Update desired value(s) in copy
+
+      console.log("updatedList: ", updatedList);
+      console.log("taskInd: ", taskInd);
+      console.log(
+        "In Callback [Modify-Executed] ==> Task " +
+          payload.task +
+          " at " +
+          taskInd +
+          " --> task: ",
+        latestState[taskInd]
+      );
+
+      return updatedList; // [STEP-3] Update state with copy -- Do not forget to return updated copy
+    }
+    // break;
     default:
       return latestState; // Do not forget to return ---- No change
   }

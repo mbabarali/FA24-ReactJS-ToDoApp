@@ -2,10 +2,13 @@
 import { useState } from "react";
 import { useReducer } from "react";
 // import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
 import { useTasksState } from "../store/TaskListProvider";
+import { useTasksDispatch } from "../store/TaskListProvider";
+
+import { handleModify as onModify } from "../store/helpers";
 
 function taskToEditReducer(currentState, action) {
   const { type, payload } = action;
@@ -69,6 +72,8 @@ function taskToEditReducer(currentState, action) {
 function Edit({ id }) {
   // const ctx = useContext(TaskListContext);
   const taskList = useTasksState();
+  const dispatch = useTasksDispatch();
+  const navigate = useNavigate();
 
   const [IsDateEdit, setIsDateEdit] = useState(false);
 
@@ -146,10 +151,26 @@ function Edit({ id }) {
     setIsDateEdit((currentState) => (currentState = !currentState));
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    onModify(dispatch, taskToEdit);
+    navigate("..");
+  }
+
   // Controlled form/rendering
   function onValueChange(propertyOfTask, event) {
     switch (propertyOfTask) {
       case "createDate":
+        dispatchTaskToEdit({
+          type: "PROPERTY",
+          payload: {
+            propertyName: propertyOfTask,
+            propertyValue: new Date(event.target.value).toLocaleDateString(
+              "de-DE"
+            ),
+          },
+        });
+        break;
       case "title":
         dispatchTaskToEdit({
           type: "PROPERTY",
@@ -183,7 +204,8 @@ function Edit({ id }) {
 
   // [SOLUTION-PROBLEM-PROPS] It uses existing state/s.
   const taskEditForm = (
-    <form className="editForm">
+    // <form className="editForm">
+    <form onSubmit={handleSubmit} className="editForm">
       <label className="editItem">
         id:
         <span>{taskToEdit.id}</span>

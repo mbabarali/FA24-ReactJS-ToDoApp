@@ -23,10 +23,16 @@ function handleRestore(dispatchTaskList, id) {
   );
 }
 
-export { handleDone, handleDelete, handleAdd, handleRestore };
+function handleModify(dispatchTaskList, task) {
+  dispatchTaskList({ type: "MODIFY", payload: { task: { ...task } } });
+  console.log("In Handler [Modify-Scheduled] ==> Task ", task, " --> modify ");
+}
+
+export { handleDone, handleDelete, handleAdd, handleRestore, handleModify };
 // export {
 //   handleDone as onDone,
 //   handleDelete as onDelete,
 //   handleAdd as onAdd,
 //   handleRestore as onRestore,
+//   handleModify as onModify,
 // };
