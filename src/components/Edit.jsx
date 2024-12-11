@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { useReducer } from "react";
 // import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import TaskListContext from "../store/taskList-context";
 import "./Edit.css";
 import { useTasksState } from "../store/TaskListProvider";
@@ -69,11 +70,11 @@ function taskToEditReducer(currentState, action) {
 }
 
 // Functional Component
-function Edit({ id }) {
+function Edit({ id, onEdit }) {
   // const ctx = useContext(TaskListContext);
   const taskList = useTasksState();
   const dispatch = useTasksDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [IsDateEdit, setIsDateEdit] = useState(false);
 
@@ -151,10 +152,18 @@ function Edit({ id }) {
     setIsDateEdit((currentState) => (currentState = !currentState));
   }
 
+  const getTargetList = () => {
+    if (taskToEdit.trash) return "DELETED";
+    else if (taskToEdit.done) return "COMPLETED";
+    else return "PENDING";
+  };
+
   function handleSubmit(event) {
     event.preventDefault();
     onModify(dispatch, taskToEdit);
-    navigate("..");
+
+    onEdit(getTargetList()); // Inform parent
+    // navigate("..");
   }
 
   // Controlled form/rendering
