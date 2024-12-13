@@ -38,7 +38,7 @@ function Update() {
       {/* - Resetting all state by passing params.taskId as a key attribute to the Edit component */}
       {/* - All Edit components with different key attribute are different components and they will not share any state. */}
       {/* ---- [SOLUTION-PROBLEM-REMOUNT] -------------- */}
-      <Edit key={params.taskId} id={+params.taskId} onEdit={handleEdit} />
+      <Edit key={params.taskId} id={params.taskId} onEdit={handleEdit} />
     </div>
   );
 }

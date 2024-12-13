@@ -19,13 +19,13 @@ const reducerTaskList = (latestState, action) => {
 
       // [STEP-2] Update desired value(s) in copy
       newList.push({
-        id: 0,
+        id: "0",
         title: "",
         createDate: "00.00.0000",
         done: false,
         trash: false,
       });
-      newList[newList.length - 1].id = 100 + newList.length;
+      newList[newList.length - 1].id = String(100 + newList.length);
       newList[newList.length - 1].title = payload.newTitle;
       newList[newList.length - 1].createDate = new Date().toLocaleDateString(
         "de-DE"
