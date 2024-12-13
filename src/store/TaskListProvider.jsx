@@ -15,7 +15,14 @@ const reducerTaskList = (latestState, action) => {
       console.log("latestState: ", latestState);
 
       // [STEP-1] Create copy // Shallow copy
-      const newList = [...latestState];
+      // const newList = [...latestState];
+      // -----------------------------------------------
+      // --- ERRONEOUS SHALLOW COPY of 'latestState' ---
+      // const newState = { ...latestState }; // [SHALLOW-COPY-WRONG] Wrong use
+      // const newList = newState.tasks;
+      // -----------------------------------------------
+      // --- CORRECT SHALLOW COPY of 'tasks' --------
+      const newList = [...latestState.tasks]; // [SHALLOW-COPY-RIGHT] Right use
 
       // [STEP-2] Update desired value(s) in copy
       newList.push({
@@ -42,14 +49,25 @@ const reducerTaskList = (latestState, action) => {
           " --> Added "
       );
 
-      return newList; // Do not forget to return updated copy
+      // return newList; // Do not forget to return updated copy
+      // -----------------------------------------------
+      // --- ERRONEOUS SHALLOW COPY of 'latestState' ---
+      // return newState; // Do not forget to return updated copy // [SHALLOW-COPY-WRONG] Wrong use
+      // -----------------------------------------------
+      // --- CORRECT SHALLOW COPY of 'tasks' --------
+      return {
+        ...latestState,
+        tasks: newList,
+      };
     }
     // break;
     case "DONE": {
       console.log("latestState: ", latestState);
-      const taskInd = latestState.findIndex((task) => task.id === payload.id);
+      const taskInd = latestState.tasks.findIndex(
+        (task) => task.id === payload.id
+      );
 
-      const updatedList = [...latestState]; // [STEP-1] Create copy // Shallow copy
+      const updatedList = [...latestState.tasks]; // [STEP-1] Create copy // Shallow copy
       updatedList[taskInd].done = true; // [STEP-2] Update desired value(s) in copy
 
       console.log("updatedList: ", updatedList);
@@ -60,17 +78,22 @@ const reducerTaskList = (latestState, action) => {
           " at " +
           taskInd +
           " --> done: ",
-        latestState[taskInd].done
+        latestState.tasks[taskInd].done
       );
 
-      return updatedList; // Do not forget to return updated copy
+      return {
+        ...latestState,
+        tasks: updatedList,
+      }; // Do not forget to return updated copy of the state
     }
     // break;
     case "DELETE": {
       console.log("latestState: ", latestState);
 
-      const taskInd = latestState.findIndex((task) => task.id === payload.id);
-      const updatedList = [...latestState]; // [STEP-1] Create copy // Shallow copy
+      const taskInd = latestState.tasks.findIndex(
+        (task) => task.id === payload.id
+      );
+      const updatedList = [...latestState.tasks]; // [STEP-1] Create copy // Shallow copy
       updatedList[taskInd].trash = true; // [STEP-2] Update desired value(s) in copy
 
       console.log("updatedList: ", updatedList);
@@ -81,17 +104,22 @@ const reducerTaskList = (latestState, action) => {
           " at " +
           taskInd +
           " --> trash: ",
-        latestState[taskInd].trash
+        latestState.tasks[taskInd].trash
       );
 
-      return updatedList; // Do not forget to return updated copy
+      return {
+        ...latestState,
+        tasks: updatedList,
+      }; // Do not forget to return updated copy of the state
     }
     // break;
     case "RESTORE": {
       console.log("latestState: ", latestState);
-      const taskInd = latestState.findIndex((task) => task.id === payload.id);
+      const taskInd = latestState.tasks.findIndex(
+        (task) => task.id === payload.id
+      );
 
-      const updatedList = [...latestState]; // [STEP-1] Create copy // Shallow copy
+      const updatedList = [...latestState.tasks]; // [STEP-1] Create copy // Shallow copy
       updatedList[taskInd].trash = false; // [STEP-2] Update desired value(s) in copy
 
       console.log("updatedList: ", updatedList);
@@ -102,19 +130,22 @@ const reducerTaskList = (latestState, action) => {
           " at " +
           taskInd +
           " --> trash: ",
-        latestState[taskInd].trash
+        latestState.tasks[taskInd].trash
       );
 
-      return updatedList; // Do not forget to return updated copy
+      return {
+        ...latestState,
+        tasks: updatedList,
+      }; // Do not forget to return updated copy of the state
     }
     // break;
     case "MODIFY": {
       console.log("latestState: ", latestState);
-      const taskInd = latestState.findIndex(
+      const taskInd = latestState.tasks.findIndex(
         (task) => task.id === payload.task.id
       );
 
-      const updatedList = [...latestState]; // [STEP-1] Create copy // Shallow copy
+      const updatedList = [...latestState.tasks]; // [STEP-1] Create copy // Shallow copy
 
       // updatedList[taskInd] = {
       //   ...updatedList[taskInd],
@@ -136,10 +167,13 @@ const reducerTaskList = (latestState, action) => {
           " at " +
           taskInd +
           " --> task: ",
-        latestState[taskInd]
+        latestState.tasks[taskInd]
       );
 
-      return updatedList; // [STEP-3] Update state with copy -- Do not forget to return updated copy
+      return {
+        ...latestState,
+        tasks: updatedList,
+      }; // Do not forget to return updated copy of the state
     }
     // break;
     default:
@@ -199,10 +233,9 @@ export function useTasks() {
 
 // ----------------- TaskListProvider -----------------
 function TaskListProvider({ children }) {
-  const [taskList, dispatchTaskList] = useReducer(
-    reducerTaskList,
-    INITIAL_TASKS
-  );
+  const [state, dispatchState] = useReducer(reducerTaskList, {
+    tasks: INITIAL_TASKS,
+  });
 
   /*
   // ----------------- Helper Functions -----------------
@@ -235,8 +268,8 @@ function TaskListProvider({ children }) {
 
   // ----------------- Context Provider -----------------
   const contextValue = {
-    taskList: taskList,
-    dispatchTaskList: dispatchTaskList,
+    taskList: state.tasks,
+    dispatchTaskList: dispatchState,
     // onAdd: handleAdd,
     // onDone: handleDone,
     // onDelete: handleDelete,
