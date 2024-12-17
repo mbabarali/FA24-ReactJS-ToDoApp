@@ -17,31 +17,28 @@ export function getTasks() {
   // const resPromise = fetch(DB_URL + "tasks"); // [default] GET
   const resPromise = fetch(DB_URL + "tasks", { method: "get" });
 
-  return resPromise
-    .then((response) => {
-      // console.log(response);
+  return resPromise.then((response) => {
+    // console.log(response);
 
-      if (!response.ok) {
-        // Unsuccessful responses (Except 200 – 299)
-        // throw new Error(`[GET-ERROR]: ${response.status}, ${response.statusText}`);
-        throwError(response, "GET-ERROR");
-      } else {
-        // Successful responses (200 – 299)
-        console.log(
-          `[GET-SUCCESS]: ${response.status}, ${response.statusText}`
-        );
+    if (!response.ok) {
+      // Unsuccessful responses (Except 200 – 299)
+      // throw new Error(`[GET-ERROR]: ${response.status}, ${response.statusText}`);
+      throwError(response, "GET-ERROR");
+    } else {
+      // Successful responses (200 – 299)
+      console.log(`[GET-SUCCESS]: ${response.status}, ${response.statusText}`);
 
-        if (response.headers.get("Content-Type").includes("application/json")) {
-          return response.json();
-        }
-
-        throwTypeError(response, "GET-ERROR");
+      if (response.headers.get("Content-Type").includes("application/json")) {
+        return response.json();
       }
-    })
-    .then((data) => {
-      // console.log(data);
-      return data;
-    });
+
+      throwTypeError(response, "GET-ERROR");
+    }
+  });
+  // .then((data) => {
+  //   // console.log(data);
+  //   return data;
+  // });
   // Error handling in caller
   // .catch((err) => {
   //   console.error(err);
@@ -79,24 +76,22 @@ export function putTask(id, overwrite) {
   const req = new Request(url, reqInitOptions);
   const resPromise = fetch(req);
 
-  return resPromise
-    .then((response) => {
-      if (!response.ok) {
-        throwError(response, "PUT-ERROR");
-      } else if (
-        response.headers.get("Content-Type").includes("application/json")
-      ) {
-        console.log(
-          `[PUT-SUCCESS]: ${response.status}, ${response.statusText}`
-        );
-        return response.json();
-      } else {
-        throwTypeError(response, "PUT-ERROR");
-      }
-    })
-    .then((data) => {
-      return data;
-    });
+  return resPromise.then((response) => {
+    if (!response.ok) {
+      throwError(response, "PUT-ERROR");
+    } else if (
+      response.headers.get("Content-Type").includes("application/json")
+    ) {
+      console.log(`[PUT-SUCCESS]: ${response.status}, ${response.statusText}`);
+      return response.json();
+    } else {
+      throwTypeError(response, "PUT-ERROR");
+    }
+  });
+  // Doing nothing
+  // .then((data) => {
+  //   return data;
+  // });
 }
 
 export function patchTask(id, patch) {
@@ -108,24 +103,24 @@ export function patchTask(id, patch) {
     body: JSON.stringify(patch),
   });
 
-  return resPromise
-    .then((response) => {
-      if (!response.ok) {
-        throwError(response, "PATCH-ERROR");
-      } else if (
-        response.headers.get("Content-Type").includes("application/json")
-      ) {
-        console.log(
-          `[PATCH-SUCCESS]: ${response.status}, ${response.statusText}`
-        );
-        return response.json();
-      } else {
-        throwTypeError(response, "PATCH-ERROR");
-      }
-    })
-    .then((data) => {
-      return data;
-    });
+  return resPromise.then((response) => {
+    if (!response.ok) {
+      throwError(response, "PATCH-ERROR");
+    } else if (
+      response.headers.get("Content-Type").includes("application/json")
+    ) {
+      console.log(
+        `[PATCH-SUCCESS]: ${response.status}, ${response.statusText}`
+      );
+      return response.json();
+    } else {
+      throwTypeError(response, "PATCH-ERROR");
+    }
+  });
+  // Doing nothing
+  // .then((data) => {
+  //   return data;
+  // });
 }
 
 export function postTask(create) {
@@ -137,31 +132,31 @@ export function postTask(create) {
     body: JSON.stringify(create),
   });
 
-  return resPromise
-    .then((response) => {
-      if (!response.ok) {
-        throwError(response, "POST-ERROR");
+  return resPromise.then((response) => {
+    if (!response.ok) {
+      throwError(response, "POST-ERROR");
+    } else {
+      // Successful responses (200 – 299)
+      if (response.status === 201) {
+        console.log("New resource was created.");
+        console.log(
+          `[POST-SUCCESS]: ${response.status}, ${response.statusText}`
+        );
       } else {
-        // Successful responses (200 – 299)
-        if (response.status === 201) {
-          console.log("New resource was created.");
-          console.log(
-            `[POST-SUCCESS]: ${response.status}, ${response.statusText}`
-          );
-        } else {
-          throwError(response, "POST-ERROR");
-        }
-
-        if (response.headers.get("Content-Type").includes("application/json")) {
-          return response.json();
-        } else {
-          throwTypeError(response, "POST-ERROR");
-        }
+        throwError(response, "POST-ERROR");
       }
-    })
-    .then((data) => {
-      return data;
-    });
+
+      if (response.headers.get("Content-Type").includes("application/json")) {
+        return response.json();
+      } else {
+        throwTypeError(response, "POST-ERROR");
+      }
+    }
+  });
+  // Doing nothing
+  // .then((data) => {
+  //   return data;
+  // });
 }
 
 export function deleteTask(id) {
@@ -169,22 +164,22 @@ export function deleteTask(id) {
     method: "DELETE",
   });
 
-  return resPromise
-    .then((response) => {
-      if (!response.ok) {
-        throwError(response, "DELETE-ERROR");
-      } else if (
-        response.headers.get("Content-Type").includes("application/json")
-      ) {
-        console.log(
-          `[DELETE-SUCCESS]: ${response.status}, ${response.statusText}`
-        );
-        return response.json();
-      } else {
-        throwTypeError(response, "DELETE-ERROR");
-      }
-    })
-    .then((data) => {
-      return data;
-    });
+  return resPromise.then((response) => {
+    if (!response.ok) {
+      throwError(response, "DELETE-ERROR");
+    } else if (
+      response.headers.get("Content-Type").includes("application/json")
+    ) {
+      console.log(
+        `[DELETE-SUCCESS]: ${response.status}, ${response.statusText}`
+      );
+      return response.json();
+    } else {
+      throwTypeError(response, "DELETE-ERROR");
+    }
+  });
+  // Doing nothing
+  // .then((data) => {
+  //   return data;
+  // });
 }
