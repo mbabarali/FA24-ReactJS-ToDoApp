@@ -276,6 +276,21 @@ function TaskListProvider({ children }) {
     });
   }
 
+  function handlePostResponse() {
+    console.log("[handlePostResponse]");
+    console.log(this.getAllResponseHeaders());
+
+    console.log(this.response);
+    console.log("typeof this.response:", typeof this.response); // 'object' because 'responseType' was set to 'json'
+
+    // console.log(this.responseText); // The responseText is only accessible if the XMLHttpRequest object's 'responseType' is '' or 'text'
+    // console.log("typeof this.responseText:", typeof this.responseText); // The responseText is only accessible if the XMLHttpRequest object's 'responseType' is '' or 'text'
+    // console.log(JSON.parse(this.responseText)); // The responseText is only accessible if the XMLHttpRequest object's 'responseType' is '' or 'text'
+
+    // Dispatch action to state here...
+    // TODO
+  }
+
   function statusLogHandler() {
     console.log("%c[READY STATE CHANGE]", "background-color: magenta");
     // console.log(this.readyState);
@@ -389,7 +404,8 @@ function TaskListProvider({ children }) {
 
     // Register event handlers
     // * [RECOMMENDED] Add the event listeners before calling open() on the request. Otherwise the some events will not fire.
-    httpAJAX.addEventListener("load", handleGetResponse);
+    // httpAJAX.addEventListener("load", handleGetResponse);
+    httpAJAX.addEventListener("load", handlePostResponse);
     // httpAJAX.onload = handleGetResponse;
     httpAJAX.addEventListener("readystatechange", statusLogHandler);
     httpAJAX.addEventListener("readystatechange", processStateHandler);
@@ -397,14 +413,29 @@ function TaskListProvider({ children }) {
 
     // Configure request
     let isAysnc = true; // [Default = true] If false, the send() method does not return until the response is received.
-    httpAJAX.open("get", "http://localhost:5000/tasks", isAysnc);
+    // httpAJAX.open("get", "http://localhost:5000/tasks", isAysnc);
+    httpAJAX.open("post", "http://localhost:5000/tasks", isAysnc);
 
     // Add/modify headers/properties
     httpAJAX.responseType = "json"; // [Default] "" as "text"
     // httpAJAX.setRequestHeader("Accept", "application/json"); // 'setRequestHeader' must be called after calling open() and before calling send()
+    httpAJAX.setRequestHeader(
+      "Content-type",
+      "application/json; charset=utf-8"
+    );
 
     // Send request
-    httpAJAX.send();
+    // httpAJAX.send();
+    httpAJAX.send(
+      JSON.stringify({
+        id: "postExample",
+        title: "New task posted",
+        createDate: new Date().toLocaleDateString("de-DE"),
+        done: false,
+        trash: false,
+      })
+    ); // [Example] Body for post method
+
     console.log("httpAJAX.responseType:", httpAJAX.responseType); // [Default] "" treated as "text"
   }, []); // With empty dependency array [Single execution]
   // }); // Without dependency array [Infinite loop of rendering]
