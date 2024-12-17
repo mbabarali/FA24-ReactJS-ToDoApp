@@ -17,13 +17,35 @@ export function getTasks() {
 }
 
 export function putTask(id, overwrite) {
-  const resPromise = fetch(DB_URL + `tasks/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json;charset=utf-8",
-    },
-    body: JSON.stringify(overwrite),
-  });
+  // const resPromise = fetch(DB_URL + `tasks/${id}`, {
+  //   method: "PUT",
+  //   headers: {
+  //     "Content-Type": "application/json;charset=utf-8",
+  //   },
+  //   body: JSON.stringify(overwrite),
+  // });
+
+  // Request and Headers constructors
+  const reqHeaders = new Headers();
+  reqHeaders.append("Content-Type", "application/json");
+  reqHeaders.append("Content-Type", "charset=utf-8");
+
+  const url = DB_URL + `tasks/${id}`;
+  const method = "PUT";
+  const body = JSON.stringify(overwrite);
+  const headers = reqHeaders;
+  // console.log(...reqHeaders);
+
+  // [RequestInit]
+  const reqInitOptions = {
+    url,
+    method,
+    headers,
+    body,
+  };
+
+  const req = new Request(url, reqInitOptions);
+  const resPromise = fetch(req);
 
   return resPromise
     .then((response) => {
