@@ -276,6 +276,81 @@ function TaskListProvider({ children }) {
     });
   }
 
+  function statusLogHandler() {
+    console.log("%c[READY STATE CHANGE]", "background-color: magenta");
+    // console.log(this.readyState);
+
+    // ----------------------------------
+    // States of an XMLHttpRequest client
+    // ----------------------------------
+    // 0   UNSENT	          Client has been created. open() not called yet.
+    // 1	  OPENED	          open() has been called.
+    // 2	  HEADERS_RECEIVED	send() has been called, and RESPONSE headers and RESPONSE status are available.
+    // 3	  LOADING	          Downloading; 'responseText' holds partial data.
+    // 4	  DONE              The operation is complete.
+    // ----------------------------------
+
+    switch (this.readyState) {
+      case 0:
+        console.log("UNSENT: Client has been created. open() not called yet.");
+        break;
+      case 1:
+        console.log("OPENED: 'open' has been called.");
+        break;
+      case 2:
+        console.log(
+          "HEADERS_RECEIVED: The response headers and status are available."
+        );
+        break;
+      case 3:
+        console.log(
+          "LOADING: Downloading..., 'responseText' holds partial data."
+        );
+        break;
+      case 4:
+        console.log("DONE: The operation is complete.");
+        break;
+      default:
+        console.log("[INFO-MESSAGE]: State missmatch.");
+        break;
+    }
+  }
+
+  function processStateHandler(e) {
+    console.log("%c[STATE PROCESSOR]", "background-color: DodgerBlue");
+
+    switch (this.readyState) {
+      case 0:
+        console.log(e.type + " : UNSENT"); // event type : xhr client state
+        break;
+      case 1:
+        console.log(e.type + " : OPENED"); // event type : xhr client state
+        break;
+      case 2:
+        console.log(e.type + " : HEADERS_RECEIVED"); // event type : xhr client state
+        break;
+      case 3:
+        console.log(e.type + " : LOADING"); // event type : xhr client state
+        break;
+      case 4:
+        console.log(e.type + " : DONE"); // event type : xhr client state
+
+        const status = this.status;
+        console.log("status: ", this.status);
+
+        if (status === 0 || (status >= 200 && status < 400)) {
+          // Request completed successfully
+          console.log(this.response);
+        } else {
+          // An error with the request
+        }
+        break;
+      default:
+        console.log("[INFO-MESSAGE]: State (" + e.type + ") missmatch.");
+        break;
+    }
+  }
+
   // [PROBLEM-ILR-ASYNC-XHR]: Infinite loop of rendering (ILR)
   // ---------------------------------------------------------
   // // Create client object
@@ -285,6 +360,9 @@ function TaskListProvider({ children }) {
   // // * [RECOMMENDED] Add the event listeners before calling open() on the request. Otherwise the some events will not fire.
   // httpAJAX.addEventListener("load", handleGetResponse);
   // // httpAJAX.onload = handleGetResponse;
+  // httpAJAX.addEventListener("readystatechange", statusLogHandler);
+  // httpAJAX.addEventListener("readystatechange", processStateHandler);
+  // // httpAJAX.readystatechange = statusLogHandler;
 
   // // Configure request
   // let isAysnc = true; // [Default = true] If false, the send() method does not return until the response is received.
@@ -313,6 +391,9 @@ function TaskListProvider({ children }) {
     // * [RECOMMENDED] Add the event listeners before calling open() on the request. Otherwise the some events will not fire.
     httpAJAX.addEventListener("load", handleGetResponse);
     // httpAJAX.onload = handleGetResponse;
+    httpAJAX.addEventListener("readystatechange", statusLogHandler);
+    httpAJAX.addEventListener("readystatechange", processStateHandler);
+    // httpAJAX.readystatechange = statusLogHandler;
 
     // Configure request
     let isAysnc = true; // [Default = true] If false, the send() method does not return until the response is received.
