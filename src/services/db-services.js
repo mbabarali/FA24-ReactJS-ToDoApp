@@ -33,3 +33,21 @@ export function patchTask(id, patch) {
       return data;
     });
 }
+
+export function postTask(create) {
+  const resPromise = fetch(DB_URL + `tasks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(create),
+  });
+
+  return resPromise
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    });
+}

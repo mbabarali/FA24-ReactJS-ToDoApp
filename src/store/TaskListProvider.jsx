@@ -1,6 +1,4 @@
-import { useReducer } from "react";
-import { createContext, useContext } from "react";
-import { useEffect } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 
 import { INITIAL_TASKS } from "../data/initialTasks";
 import { getTasks } from "../services/db-services";
@@ -25,7 +23,18 @@ const reducerTaskList = (latestState, action) => {
     // break;
     case "ADD": {
       console.log("latestState: ", latestState);
+      console.log("payload: ", payload);
+      console.log(
+        "latestState.tasks.concat([payload]): ",
+        latestState.tasks.concat([payload])
+      );
 
+      return {
+        ...latestState,
+        tasks: latestState.tasks.concat([payload]),
+      };
+
+      /*
       // [STEP-1] Create copy // Shallow copy
       // const newList = [...latestState];
       // -----------------------------------------------
@@ -66,11 +75,12 @@ const reducerTaskList = (latestState, action) => {
       // --- ERRONEOUS SHALLOW COPY of 'latestState' ---
       // return newState; // Do not forget to return updated copy // [SHALLOW-COPY-WRONG] Wrong use
       // -----------------------------------------------
-      // --- CORRECT SHALLOW COPY of 'tasks' --------
+      // --- CORRECT SHALLOW COPY of 'taskList' --------
       return {
         ...latestState,
         tasks: newList,
       };
+      */
     }
     // break;
     case "DONE": {
@@ -273,12 +283,10 @@ function TaskListProvider({ children }) {
   function handleRestore(id) {
     dispatchTaskList({ type: "RESTORE", payload: { id } });
     console.log(
-      "In Handler [Restore-Scheduled] ==> Task " + id + " --> restore "
+      "In Handler [Restore-Scheduled] ==> Task " + id + " --> trash "
     );
-  }
+  }    
   */
-
-  // ----------------- Load State [FETCH API] ----------------
 
   // - [PROBLEM-ILR-ASYNC]: Infinite loop of rendering (ILR) -
   // ---------------------------------------------------------
@@ -295,8 +303,8 @@ function TaskListProvider({ children }) {
   //     *  Redux Thunks
   // ---------------------------------------------------------
   //  Asynchronous code
-  // Observe various delays using network throttling from developer tools in the browser
   useEffect(() => {
+    // Observe various delays using network throttling from developer tools in the browser
     getTasks().then((tasks) => {
       dispatchState({
         type: "FETCH_SUCCESS",

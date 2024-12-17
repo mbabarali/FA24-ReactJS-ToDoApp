@@ -1,4 +1,4 @@
-import { patchTask } from "../services/db-services";
+import { patchTask, postTask } from "../services/db-services";
 
 function handleDone(dispatchTaskList, id) {
   patchTask(id, { done: true }).then((task) => {
@@ -18,10 +18,27 @@ function handleDelete(dispatchTaskList, id) {
   console.log("In Handler [Trash-Scheduled] ==> Task " + id + " --> trash ");
 }
 
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min; // min (included) and max (excluded)
+}
+
 function handleAdd(dispatchTaskList, newTitle) {
   console.log("Add triggered!");
+
   if (newTitle) {
-    dispatchTaskList({ type: "ADD", payload: { newTitle } });
+    const newTask = {
+      id: String(getRandomNumber(200, 1000)),
+      title: newTitle,
+      createDate: new Date().toLocaleDateString("de-DE"),
+      done: false,
+      trash: false,
+    };
+
+    postTask(newTask).then((task) => {
+      console.log("Task at Server: ", task);
+      dispatchTaskList({ type: "ADD", payload: newTask });
+    });
+
     console.log("In Handler [Add-Scheduled] ==> Task --> Added ");
   }
 }
