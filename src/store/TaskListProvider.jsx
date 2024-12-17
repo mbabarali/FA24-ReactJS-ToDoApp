@@ -3,6 +3,7 @@ import { createContext, useContext } from "react";
 import { useEffect } from "react";
 
 import { INITIAL_TASKS } from "../data/initialTasks";
+import { getTasks } from "../services/db-services";
 // import TaskListContext from "./taskList-context";
 
 // ----------------- State Reducer --------------------
@@ -248,6 +249,7 @@ function TaskListProvider({ children }) {
     tasks: INITIAL_TASKS,
   });
 
+  /*
   // ----------------- Load State [XHR API] ------------------
 
   function handleGetResponse() {
@@ -439,6 +441,7 @@ function TaskListProvider({ children }) {
     console.log("httpAJAX.responseType:", httpAJAX.responseType); // [Default] "" treated as "text"
   }, []); // With empty dependency array [Single execution]
   // }); // Without dependency array [Infinite loop of rendering]
+  */
 
   /*
   // ----------------- Helper Functions -----------------
@@ -468,6 +471,34 @@ function TaskListProvider({ children }) {
     );
   }
   */
+
+  // ----------------- Load State [FETCH API] ----------------
+
+  // - [PROBLEM-ILR-ASYNC]: Infinite loop of rendering (ILR) -
+  // ---------------------------------------------------------
+  // getTasks().then((tasks) => {
+  //   dispatchState({
+  //     type: "FETCH_SUCCESS",
+  //     payload: { tasks },
+  //   });
+  // });
+
+  // ---- [SOLUTION-PROBLEM-ILR-ASYNC] -----------------------
+  //     *  useEffect Hook
+  //     *  Route Loaders
+  //     *  Redux Thunks
+  // ---------------------------------------------------------
+  //  Asynchronous code
+  // Observe various delays using network throttling from developer tools in the browser
+  useEffect(() => {
+    getTasks().then((tasks) => {
+      dispatchState({
+        type: "FETCH_SUCCESS",
+        payload: { tasks },
+      });
+    });
+  }, []); // With empty dependency array [Single execution]
+  // }); // Without dependency array [Infinite loop of rendering]
 
   // ----------------- Context Provider -----------------
   const contextValue = {
