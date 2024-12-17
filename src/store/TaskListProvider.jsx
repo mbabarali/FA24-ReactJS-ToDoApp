@@ -316,6 +316,23 @@ function TaskListProvider({ children }) {
   //     *  Redux Thunks
   // ---------------------------------------------------------
   //  Asynchronous code
+  // Observe various delays using network throttling from developer tools in the browser
+  useEffect(() => {
+    const asyncWrapper = async () => {
+      try {
+        const tasks = await getTasks();
+        dispatchState({
+          type: "FETCH_SUCCESS",
+          payload: { tasks },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    asyncWrapper();
+  }, []); // With empty dependency array [Single execution]
+  // }); // Without dependency array [Infinite loop of rendering]
+  /*
   useEffect(() => {
     // Observe various delays using network throttling from developer tools in the browser
     getTasks()
@@ -331,6 +348,7 @@ function TaskListProvider({ children }) {
       });
   }, []); // With empty dependency array [Single execution]
   // }); // Without dependency array [Infinite loop of rendering]
+  */
 
   // ----------------- Context Provider -----------------
   const contextValue = {
