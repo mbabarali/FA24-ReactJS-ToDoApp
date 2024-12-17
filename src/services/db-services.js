@@ -16,6 +16,24 @@ export function getTasks() {
     });
 }
 
+export function putTask(id, overwrite) {
+  const resPromise = fetch(DB_URL + `tasks/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(overwrite),
+  });
+
+  return resPromise
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    });
+}
+
 export function patchTask(id, patch) {
   const resPromise = fetch(DB_URL + `tasks/${id}`, {
     method: "PATCH",

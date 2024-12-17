@@ -1,4 +1,4 @@
-import { patchTask, postTask } from "../services/db-services";
+import { patchTask, postTask, putTask } from "../services/db-services";
 
 function handleDone(dispatchTaskList, id) {
   patchTask(id, { done: true }).then((task) => {
@@ -55,7 +55,11 @@ function handleRestore(dispatchTaskList, id) {
 }
 
 function handleModify(dispatchTaskList, task) {
-  patchTask(task.id, { ...task }).then((task) => {
+  // patchTask(task.id, { ...task }).then((task) => {
+  //   console.log("Task at Server: ", task);
+  //   dispatchTaskList({ type: "MODIFY", payload: { task: { ...task } } });
+  // });
+  putTask(task.id, { ...task }).then((task) => {
     console.log("Task at Server: ", task);
     dispatchTaskList({ type: "MODIFY", payload: { task: { ...task } } });
   });
