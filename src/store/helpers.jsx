@@ -1,4 +1,9 @@
-import { patchTask, postTask, putTask } from "../services/db-services";
+import {
+  deleteTask,
+  patchTask,
+  postTask,
+  putTask,
+} from "../services/db-services";
 
 function handleDone(dispatchTaskList, id) {
   patchTask(id, { done: true }).then((task) => {
@@ -16,6 +21,15 @@ function handleDelete(dispatchTaskList, id) {
   });
 
   console.log("In Handler [Trash-Scheduled] ==> Task " + id + " --> trash ");
+}
+
+function handleEmptyTrash(dispatchTaskList, id) {
+  deleteTask(id).then((task) => {
+    console.log("Task at Server: ", task);
+    dispatchTaskList({ type: "REMOVE", payload: { id } });
+  });
+
+  console.log("In Handler [Remove-Scheduled] ==> Tasks ", id, " --> remove ");
 }
 
 function getRandomNumber(min, max) {
@@ -67,11 +81,19 @@ function handleModify(dispatchTaskList, task) {
   console.log("In Handler [Modify-Scheduled] ==> Task ", task, " --> modify ");
 }
 
-export { handleDone, handleDelete, handleAdd, handleRestore, handleModify };
+export {
+  handleDone,
+  handleDelete,
+  handleAdd,
+  handleRestore,
+  handleModify,
+  handleEmptyTrash,
+};
 // export {
 //   handleDone as onDone,
 //   handleDelete as onDelete,
 //   handleAdd as onAdd,
 //   handleRestore as onRestore,
 //   handleModify as onModify,
+//   handleEmptyTrash as onEmpty,
 // };

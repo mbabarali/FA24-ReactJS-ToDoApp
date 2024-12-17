@@ -1,0 +1,10 @@
+.emptybin-container {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1rem auto;
+}
+
+.emptybin-btn {
+  padding: 1rem;
+  color: red;
+}

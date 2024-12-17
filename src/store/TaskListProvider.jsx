@@ -198,6 +198,19 @@ const reducerTaskList = (latestState, action) => {
       }; // Do not forget to return updated copy of the state
     }
     // break;
+    case "REMOVE": {
+      console.log("latestState: ", latestState);
+
+      const newList = latestState.tasks.filter((task) => {
+        return task.id !== payload.id;
+      });
+
+      return {
+        ...latestState,
+        tasks: newList,
+      }; // Do not forget to return updated copy of the state
+    }
+    // break;
     default:
       return latestState; // Do not forget to return ---- No change
   }

@@ -69,3 +69,17 @@ export function postTask(create) {
       return data;
     });
 }
+
+export function deleteTask(id) {
+  const resPromise = fetch(DB_URL + `tasks/${id}`, {
+    method: "DELETE",
+  });
+
+  return resPromise
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    });
+}
