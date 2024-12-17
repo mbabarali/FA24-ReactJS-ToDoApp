@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import { createContext, useContext } from "react";
+import { useEffect } from "react";
 
 import { INITIAL_TASKS } from "../data/initialTasks";
 // import TaskListContext from "./taskList-context";
@@ -11,6 +12,16 @@ const reducerTaskList = (latestState, action) => {
   const { type, payload } = action;
 
   switch (type) {
+    case "FETCH_SUCCESS": {
+      console.log("latestState: ", latestState);
+      console.log("nextState: ", payload.tasks);
+
+      return {
+        ...latestState,
+        tasks: payload.tasks,
+      }; // Do not forget to return updated copy of the state
+    }
+    // break;
     case "ADD": {
       console.log("latestState: ", latestState);
 
@@ -236,6 +247,86 @@ function TaskListProvider({ children }) {
   const [state, dispatchState] = useReducer(reducerTaskList, {
     tasks: INITIAL_TASKS,
   });
+
+  // ----------------- Load State [XHR API] ------------------
+
+  function handleGetResponse() {
+    console.log("[handleGetResponse]");
+    console.log(this.getAllResponseHeaders());
+    console.log(this.response);
+    console.log("typeof this.response:", typeof this.response); // 'string' because 'responseType' was default i.e. "" treated as "text"
+    // console.log(this.responseText); // 'responseText' property accessible with 'responseType' equals "" or "text"
+    // console.log("typeof this.responseText:", typeof this.responseText); // 'responseText' property accessible with 'responseType' equals "" or "text"
+
+    // Load Task list with items from Ajax response
+    // NOTE: XMLHttpRequest object's 'responseType' is '' (default, treated as "text")
+    let tasks = [];
+
+    if (this.responseType === "json") {
+      tasks = this.response;
+    } else if (this.responseType === "" || this.responseType === "text") {
+      tasks = JSON.parse(this.responseText);
+    } else {
+      tasks = [];
+    }
+
+    dispatchState({
+      type: "FETCH_SUCCESS",
+      payload: { tasks },
+    });
+  }
+
+  // [PROBLEM-ILR-ASYNC-XHR]: Infinite loop of rendering (ILR)
+  // ---------------------------------------------------------
+  // // Create client object
+  // const httpAJAX = new XMLHttpRequest();
+
+  // // Register event handlers
+  // // * [RECOMMENDED] Add the event listeners before calling open() on the request. Otherwise the some events will not fire.
+  // httpAJAX.addEventListener("load", handleGetResponse);
+  // // httpAJAX.onload = handleGetResponse;
+
+  // // Configure request
+  // let isAysnc = true; // [Default = true] If false, the send() method does not return until the response is received.
+  // httpAJAX.open("get", "http://localhost:5000/tasks", isAysnc);
+
+  // // Add/modify headers/properties
+  // httpAJAX.responseType = "json"; // [Default] "" as "text"
+  // // httpAJAX.setRequestHeader("Accept", "application/json"); // 'setRequestHeader' must be called after calling open() and before calling send()
+
+  // // Send request
+  // httpAJAX.send();
+  // console.log("httpAJAX.responseType:", httpAJAX.responseType); // [Default] "" treated as "text"
+
+  // ---- [SOLUTION-PROBLEM-ILR-ASYNC-XHR] -------------------
+  //     *  useEffect Hook
+  //     *  Route Loaders
+  //     *  Redux Thunks
+  // ---------------------------------------------------------
+  //  Asynchronous code
+  // Observe various delays using network throttling from developer tools in the browser
+  useEffect(() => {
+    // Create client object
+    const httpAJAX = new XMLHttpRequest();
+
+    // Register event handlers
+    // * [RECOMMENDED] Add the event listeners before calling open() on the request. Otherwise the some events will not fire.
+    httpAJAX.addEventListener("load", handleGetResponse);
+    // httpAJAX.onload = handleGetResponse;
+
+    // Configure request
+    let isAysnc = true; // [Default = true] If false, the send() method does not return until the response is received.
+    httpAJAX.open("get", "http://localhost:5000/tasks", isAysnc);
+
+    // Add/modify headers/properties
+    httpAJAX.responseType = "json"; // [Default] "" as "text"
+    // httpAJAX.setRequestHeader("Accept", "application/json"); // 'setRequestHeader' must be called after calling open() and before calling send()
+
+    // Send request
+    httpAJAX.send();
+    console.log("httpAJAX.responseType:", httpAJAX.responseType); // [Default] "" treated as "text"
+  }, []); // With empty dependency array [Single execution]
+  // }); // Without dependency array [Infinite loop of rendering]
 
   /*
   // ----------------- Helper Functions -----------------
