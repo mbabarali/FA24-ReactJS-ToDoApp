@@ -6,28 +6,40 @@ import {
 } from "../services/db-services";
 
 function handleDone(dispatchTaskList, id) {
-  patchTask(id, { done: true }).then((task) => {
-    console.log("Task at Server: ", task);
-    dispatchTaskList({ type: "DONE", payload: { id } });
-  });
+  patchTask(id, { done: true })
+    .then((task) => {
+      console.log("Task at Server: ", task);
+      dispatchTaskList({ type: "DONE", payload: { id } });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   console.log("In Handler [Done-Scheduled] ==> Task " + id + " --> done ");
 }
 
 function handleDelete(dispatchTaskList, id) {
-  patchTask(id, { trash: true }).then((task) => {
-    console.log("Task at Server: ", task);
-    dispatchTaskList({ type: "DELETE", payload: { id } });
-  });
+  patchTask(id, { trash: true })
+    .then((task) => {
+      console.log("Task at Server: ", task);
+      dispatchTaskList({ type: "DELETE", payload: { id } });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   console.log("In Handler [Trash-Scheduled] ==> Task " + id + " --> trash ");
 }
 
 function handleEmptyTrash(dispatchTaskList, id) {
-  deleteTask(id).then((task) => {
-    console.log("Task at Server: ", task);
-    dispatchTaskList({ type: "REMOVE", payload: { id } });
-  });
+  deleteTask(id)
+    .then((task) => {
+      console.log("Task at Server: ", task);
+      dispatchTaskList({ type: "REMOVE", payload: { id } });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   console.log("In Handler [Remove-Scheduled] ==> Tasks ", id, " --> remove ");
 }
@@ -48,20 +60,28 @@ function handleAdd(dispatchTaskList, newTitle) {
       trash: false,
     };
 
-    postTask(newTask).then((task) => {
-      console.log("Task at Server: ", task);
-      dispatchTaskList({ type: "ADD", payload: newTask });
-    });
+    postTask(newTask)
+      .then((task) => {
+        console.log("Task at Server: ", task);
+        dispatchTaskList({ type: "ADD", payload: newTask });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     console.log("In Handler [Add-Scheduled] ==> Task --> Added ");
   }
 }
 
 function handleRestore(dispatchTaskList, id) {
-  patchTask(id, { trash: false }).then((task) => {
-    console.log("Task at Server: ", task);
-    dispatchTaskList({ type: "RESTORE", payload: { id } });
-  });
+  patchTask(id, { trash: false })
+    .then((task) => {
+      console.log("Task at Server: ", task);
+      dispatchTaskList({ type: "RESTORE", payload: { id } });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   console.log(
     "In Handler [Restore-Scheduled] ==> Task " + id + " --> restore "
@@ -73,10 +93,14 @@ function handleModify(dispatchTaskList, task) {
   //   console.log("Task at Server: ", task);
   //   dispatchTaskList({ type: "MODIFY", payload: { task: { ...task } } });
   // });
-  putTask(task.id, { ...task }).then((task) => {
-    console.log("Task at Server: ", task);
-    dispatchTaskList({ type: "MODIFY", payload: { task: { ...task } } });
-  });
+  putTask(task.id, { ...task })
+    .then((task) => {
+      console.log("Task at Server: ", task);
+      dispatchTaskList({ type: "MODIFY", payload: { task: { ...task } } });
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 
   console.log("In Handler [Modify-Scheduled] ==> Task ", task, " --> modify ");
 }

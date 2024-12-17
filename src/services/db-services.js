@@ -1,5 +1,17 @@
 import { DB_URL } from "./constants";
 
+const throwError = (res, tag = "ERROR") => {
+  let err = new Error(`[${tag}]: ${res.status}, ${res.statusText}`);
+  err.response = res; // Error along with response
+  throw err;
+};
+
+const throwTypeError = (res, tag = "ERROR") => {
+  let err = new TypeError(`[${tag}]: ${res.status}, ${res.statusText}`);
+  err.response = res; // Error along with response
+  throw err;
+};
+
 export function getTasks() {
   // "fetch" API (Browser API)
   // const resPromise = fetch(DB_URL + "tasks"); // [default] GET
@@ -8,12 +20,32 @@ export function getTasks() {
   return resPromise
     .then((response) => {
       // console.log(response);
-      return response.json();
+
+      if (!response.ok) {
+        // Unsuccessful responses (Except 200 – 299)
+        // throw new Error(`[GET-ERROR]: ${response.status}, ${response.statusText}`);
+        throwError(response, "GET-ERROR");
+      } else {
+        // Successful responses (200 – 299)
+        console.log(
+          `[GET-SUCCESS]: ${response.status}, ${response.statusText}`
+        );
+
+        if (response.headers.get("Content-Type").includes("application/json")) {
+          return response.json();
+        }
+
+        throwTypeError(response, "GET-ERROR");
+      }
     })
     .then((data) => {
       // console.log(data);
       return data;
     });
+  // Error handling in caller
+  // .catch((err) => {
+  //   console.error(err);
+  // });
 }
 
 export function putTask(id, overwrite) {
@@ -49,7 +81,18 @@ export function putTask(id, overwrite) {
 
   return resPromise
     .then((response) => {
-      return response.json();
+      if (!response.ok) {
+        throwError(response, "PUT-ERROR");
+      } else if (
+        response.headers.get("Content-Type").includes("application/json")
+      ) {
+        console.log(
+          `[PUT-SUCCESS]: ${response.status}, ${response.statusText}`
+        );
+        return response.json();
+      } else {
+        throwTypeError(response, "PUT-ERROR");
+      }
     })
     .then((data) => {
       return data;
@@ -67,7 +110,18 @@ export function patchTask(id, patch) {
 
   return resPromise
     .then((response) => {
-      return response.json();
+      if (!response.ok) {
+        throwError(response, "PATCH-ERROR");
+      } else if (
+        response.headers.get("Content-Type").includes("application/json")
+      ) {
+        console.log(
+          `[PATCH-SUCCESS]: ${response.status}, ${response.statusText}`
+        );
+        return response.json();
+      } else {
+        throwTypeError(response, "PATCH-ERROR");
+      }
     })
     .then((data) => {
       return data;
@@ -85,7 +139,25 @@ export function postTask(create) {
 
   return resPromise
     .then((response) => {
-      return response.json();
+      if (!response.ok) {
+        throwError(response, "POST-ERROR");
+      } else {
+        // Successful responses (200 – 299)
+        if (response.status === 201) {
+          console.log("New resource was created.");
+          console.log(
+            `[POST-SUCCESS]: ${response.status}, ${response.statusText}`
+          );
+        } else {
+          throwError(response, "POST-ERROR");
+        }
+
+        if (response.headers.get("Content-Type").includes("application/json")) {
+          return response.json();
+        } else {
+          throwTypeError(response, "POST-ERROR");
+        }
+      }
     })
     .then((data) => {
       return data;
@@ -99,7 +171,18 @@ export function deleteTask(id) {
 
   return resPromise
     .then((response) => {
-      return response.json();
+      if (!response.ok) {
+        throwError(response, "DELETE-ERROR");
+      } else if (
+        response.headers.get("Content-Type").includes("application/json")
+      ) {
+        console.log(
+          `[DELETE-SUCCESS]: ${response.status}, ${response.statusText}`
+        );
+        return response.json();
+      } else {
+        throwTypeError(response, "DELETE-ERROR");
+      }
     })
     .then((data) => {
       return data;

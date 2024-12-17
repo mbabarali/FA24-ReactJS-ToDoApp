@@ -318,12 +318,17 @@ function TaskListProvider({ children }) {
   //  Asynchronous code
   useEffect(() => {
     // Observe various delays using network throttling from developer tools in the browser
-    getTasks().then((tasks) => {
-      dispatchState({
-        type: "FETCH_SUCCESS",
-        payload: { tasks },
+    getTasks()
+      .then((tasks) => {
+        console.log(tasks);
+        dispatchState({
+          type: "FETCH_SUCCESS",
+          payload: { tasks },
+        });
+      })
+      .catch((err) => {
+        console.error(err);
       });
-    });
   }, []); // With empty dependency array [Single execution]
   // }); // Without dependency array [Infinite loop of rendering]
 
