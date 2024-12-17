@@ -35,10 +35,6 @@ export function getTasks() {
       throwTypeError(response, "GET-ERROR");
     }
   });
-  // .then((data) => {
-  //   // console.log(data);
-  //   return data;
-  // });
   // Error handling in caller
   // .catch((err) => {
   //   console.error(err);
@@ -88,10 +84,6 @@ export function putTask(id, overwrite) {
       throwTypeError(response, "PUT-ERROR");
     }
   });
-  // Doing nothing
-  // .then((data) => {
-  //   return data;
-  // });
 }
 
 export function patchTask(id, patch) {
@@ -117,10 +109,6 @@ export function patchTask(id, patch) {
       throwTypeError(response, "PATCH-ERROR");
     }
   });
-  // Doing nothing
-  // .then((data) => {
-  //   return data;
-  // });
 }
 
 export function postTask(create) {
@@ -153,10 +141,6 @@ export function postTask(create) {
       }
     }
   });
-  // Doing nothing
-  // .then((data) => {
-  //   return data;
-  // });
 }
 
 export function deleteTask(id) {
@@ -178,8 +162,4 @@ export function deleteTask(id) {
       throwTypeError(response, "DELETE-ERROR");
     }
   });
-  // Doing nothing
-  // .then((data) => {
-  //   return data;
-  // });
 }
